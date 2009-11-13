@@ -33,7 +33,7 @@ public class Account {
   private String name;
 
   /**
-   * The current account balance.
+   * The current account balance. The initial value of 0 should be discussed.
    */
   private double balance = 0d;
 
@@ -64,5 +64,13 @@ public class Account {
 
   public void setPositions(List<Position> positions) {
     this.positions = positions;
+  }
+
+  public double getBalance() {
+    return balance;
+  }
+
+  public void setBalance(double balance) {
+    this.balance = balance;
   }
 }
