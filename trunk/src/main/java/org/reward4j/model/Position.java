@@ -64,4 +64,12 @@ public class Position {
   public void setIdate(Date idate) {
     this.idate = idate;
   }
+
+  public double getValue() {
+    return value;
+  }
+
+  public void setValue(double value) {
+    this.value = value;
+  }
 }
