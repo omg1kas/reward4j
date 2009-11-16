@@ -13,24 +13,23 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.reward4j.model;
+package org.reward4j;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * A <code>RateableAction</code> describes an action, which will be payed for, when 
- * the action is executed.
- *   
+ * 
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  */
-public class RateableAction {
-	
-	String name;
-	
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
+@Retention (RetentionPolicy.RUNTIME)
+@Target (ElementType.METHOD)
+public @interface Payable {
 
+  String action();
+  
+  String coins();
+  
 }
