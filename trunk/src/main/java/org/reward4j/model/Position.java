@@ -34,7 +34,7 @@ public class Position {
   /**
    * Rate for this account position according to the underlying action.
    */
-  private double value;
+  private Coin value;
   
   /**
    * 
@@ -65,11 +65,11 @@ public class Position {
     this.idate = idate;
   }
 
-  public double getValue() {
+  public Coin getValue() {
     return value;
   }
 
-  public void setValue(double value) {
+  public void setValue(Coin value) {
     this.value = value;
   }
 }
