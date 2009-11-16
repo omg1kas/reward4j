@@ -13,24 +13,17 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.reward4j.model;
+package org.reward4j.service;
+
+import org.reward4j.model.Coin;
+import org.reward4j.model.User;
 
 /**
- * A <code>RateableAction</code> describes an action, which will be payed for, when 
- * the action is executed.
- *   
+ * 
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  */
-public class RateableAction {
-	
-	String name;
-	
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
+public interface RewardService {
 
+	void payForAction(Coin coins, String actionName, User user);
+	
 }
