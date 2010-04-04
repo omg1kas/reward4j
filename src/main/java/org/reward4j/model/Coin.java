@@ -1,18 +1,19 @@
-/*
- * Copyright 2009 reward4j.org
- * 
+/**
+ * Copyright 2009-2010 reward4j.org
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package org.reward4j.model;
 
 import java.io.Serializable;
@@ -21,9 +22,9 @@ import java.math.BigInteger;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * <code>Coin</code> is equivalent to the design pattern <code>Money</code>
- * of <i>Martin Fowler</i>. <code>Coin</code> is a <code>ValueObject</code>, 
- * that is immutable after creation. Therefore no setters exists. 
+ * {@code Coin} is equivalent to the design pattern <code>Money</code>
+ * of <i>Martin Fowler</i>. {@code Coin} is a <code>ValueObject</code>, 
+ * that is immutable after creation. Therefore no setters exist. 
  *
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  */
@@ -122,8 +123,9 @@ public class Coin implements Comparable<Coin>, Serializable {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		return new ToStringBuilder(this).append("amount", this.amount)
-				.toString();
+		return new ToStringBuilder(this)
+		    .append("amount", this.amount)
+			.toString();
 	}
 
 }
