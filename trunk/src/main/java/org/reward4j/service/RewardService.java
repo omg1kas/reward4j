@@ -16,6 +16,9 @@
 
 package org.reward4j.service;
 
+import java.util.Set;
+
+import org.reward4j.model.Account;
 import org.reward4j.model.Coin;
 import org.reward4j.model.User;
 
@@ -38,5 +41,20 @@ public interface RewardService {
      * @param user The user who has done the action
      */
 	void payForAction(Coin coins, String actionName, User user);
+	
+	/**
+	 * Retrieves the {@link Account} of an {@link User}.
+	 * 
+	 * @param user the owner of the {@link Account}
+	 * @return the user's {@link Account}
+	 */
+	Account getAccount(User user);
+	
+	/**
+	 * Gets all available {@link Account}s.
+	 * 
+	 * @return all available {@link Account}s.
+	 */
+	Set<Account> getAllAccounts();
 	
 }

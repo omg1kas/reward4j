@@ -16,11 +16,18 @@
 
 package org.reward4j.service.impl;
 
-import org.junit.Assert;
+import static org.junit.Assert.*;
 import org.junit.Test;
+import org.reward4j.model.Account;
+import org.reward4j.model.Coin;
 import org.reward4j.service.RewardService;
 import org.reward4j.test.BaseTestCase;
 
+/**
+ * The {@code RewardServiceImplTest} tests the behaviour of {@link RewardServiceImpl}.
+ * 
+ * @author Peter Kehren <mailto:kehren@eyeslide.de>
+ */
 public class RewardServiceImplTest extends BaseTestCase {
     
     private RewardService rewardService;
@@ -31,7 +38,17 @@ public class RewardServiceImplTest extends BaseTestCase {
 
     @Test
     public void testPayForAction() {
-        Assert.assertNotNull(this.rewardService);
+        fail();
+    }
+    
+    @Test
+    public void testGetAccountOfUser() {
+        fail();
+    }
+    
+    @Test
+    public void testGetAllAccounts() {
+        fail();
     }
 
 }
