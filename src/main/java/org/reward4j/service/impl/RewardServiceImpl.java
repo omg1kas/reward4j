@@ -16,9 +16,12 @@
 
 package org.reward4j.service.impl;
 
+import java.util.Set;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.reward4j.dao.AccountDao;
+import org.reward4j.model.Account;
 import org.reward4j.model.Coin;
 import org.reward4j.model.User;
 import org.reward4j.service.RewardService;
@@ -35,6 +38,10 @@ public class RewardServiceImpl implements RewardService {
     private AccountDao accountDao;
     
 
+    public void setAccountDao(AccountDao accountDao) {
+        this.accountDao = accountDao;
+    }
+
     @Override
     public void payForAction(Coin coins, String actionName, User user) {
         if(null==user) throw new IllegalArgumentException("user must not be null");
@@ -43,11 +50,18 @@ public class RewardServiceImpl implements RewardService {
         
         //fetch the user's account
         
-        
     }
     
-    public void setAccountDao(AccountDao accountDao) {
-        this.accountDao = accountDao;
+    @Override
+    public Account getAccount(User user) {
+        if(null==user) throw new IllegalArgumentException("user must not be null");
+        return null;
     }
-
+    
+    @Override
+    public Set<Account> getAllAccounts() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
 }
