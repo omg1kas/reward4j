@@ -19,6 +19,8 @@ package org.reward4j.model;
 import java.io.Serializable;
 import java.math.BigInteger;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
@@ -52,22 +54,16 @@ public class Coin implements Comparable<Coin>, Serializable {
 		return this.amount;
 	}
 
-	protected void setAmount(BigInteger amount) {
-		this.amount = amount;
-	}
-
 	public Coin add(Coin c) {
-		amount = amount.add(c.amount);
-		return createNewInstance(amount);
+		return createNewInstance(this.amount.add(c.amount));
 	}
 
 	public Coin subtract(Coin c) {
-		amount = amount.add(c.amount.negate());
-		return createNewInstance(amount);
+		return createNewInstance(this.amount.add(c.amount.negate()));
 	}
 
 	public Coin negate() {
-		return createNewInstance(amount.negate());
+		return createNewInstance(this.amount.negate());
 	}
 
 	public Coin multiply(double value) {
@@ -108,20 +104,32 @@ public class Coin implements Comparable<Coin>, Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Coin))
-			return false;
-		Coin other = (Coin) obj;
-		return (amount.equals(other.amount));
+        
+        if (obj == null) { 
+            return false; 
+        }
+        if (obj == this) { 
+            return true; 
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        
+        Coin rhs = (Coin) obj;
+        
+        return new EqualsBuilder()
+            .append(this.amount, rhs.amount)
+            .isEquals();
 	}
 
-	@Override
-	public int hashCode() {
-		return amount.hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+            .append(this.amount)
+            .toHashCode(); 
+    }
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
+    @Override
 	public String toString() {
 		return new ToStringBuilder(this)
 		    .append("amount", this.amount)

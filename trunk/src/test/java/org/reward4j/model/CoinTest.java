@@ -41,14 +41,14 @@ public class CoinTest {
     @Test
     public void testAdd() {
         Coin coins = new Coin(5);
-        coins.add(new Coin(3));
+        coins = coins.add(new Coin(3));
         assertEquals(8, coins.amount(), 0);
     }
     
     @Test
     public void testSubtract() {
         Coin coins = new Coin(5);
-        coins.subtract(new Coin(3));
+        coins = coins.subtract(new Coin(3));
         assertEquals(2, coins.amount(), 0);
     }
     
@@ -109,5 +109,19 @@ public class CoinTest {
         
         String notACoin = new String("notACoin");
         assertFalse(coinsA.equals(notACoin));
+    }
+    
+    @Test
+    public void testHashCode() {
+        Coin coins = new Coin(4);
+        int hashCode = coins.hashCode();
+        coins.div(2);
+        assertEquals(hashCode, coins.hashCode());
+        
+        coins.subtract(new Coin(1));
+        assertEquals(hashCode, coins.hashCode());
+        
+        coins.add(new Coin(5));
+        assertEquals(hashCode, coins.hashCode());
     }
 }

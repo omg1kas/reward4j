@@ -16,6 +16,8 @@
 
 package org.reward4j.dao.hibernate;
 
+import java.util.Set;
+
 import org.reward4j.dao.AccountDao;
 import org.reward4j.dao.AccountNotExistException;
 import org.reward4j.model.Account;
@@ -31,6 +33,12 @@ public class AccountHibDao implements AccountDao {
 
     @Override
     public Account getAccountForUser(User user) throws AccountNotExistException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    
+    @Override
+    public Set<Account> getAllAccounts() {
         // TODO Auto-generated method stub
         return null;
     }

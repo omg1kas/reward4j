@@ -20,6 +20,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 /**
  * The {@code User} represents a user in the reward4j domain. A {@code User} has an {@link Account}. 
  */
@@ -33,21 +37,21 @@ public class User implements Serializable {
     
     // the user's accounts; normally a user has only one account
     private List<Account> accounts = new ArrayList<Account>();
+    
+    public User(final long id, final String name) {
+        if(0>=id) throw new IllegalArgumentException("id must be positiv");
+        if(null==name) throw new IllegalArgumentException("name must not be null");
+        
+        this.id = id;
+        this.name = name;
+    }
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public List<Account> getAccounts() {
@@ -57,4 +61,42 @@ public class User implements Serializable {
     public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
     }
+    
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .append("id", this.id)
+            .append("name", this.name)
+            .toString();
+    }
+    
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+            .append(this.id)
+            .append(this.name)
+            .toHashCode(); 
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        
+        if (obj == null) { 
+            return false; 
+        }
+        if (obj == this) { 
+            return true; 
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        
+        User rhs = (User) obj;
+        
+        return new EqualsBuilder()
+            .append(this.id, rhs.id)
+            .append(this.name, rhs.name)
+            .isEquals();
+    }
+    
 }

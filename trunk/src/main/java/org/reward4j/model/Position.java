@@ -18,9 +18,15 @@ package org.reward4j.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
+
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * The {@code Position} represents a position within a user's {@link Account}.
+ * The {@code Position} represents a position within a user's {@link Account}. After 
+ * creation a {@code Position} is immutable.
  */
 public class Position implements Serializable {
     private static final long serialVersionUID = -4937858211810042799L;
@@ -32,16 +38,25 @@ public class Position implements Serializable {
     private Date insertionDate = new Date();
 
     // Rate for this account position according to the underlying action.
-    private Coin value;
+    private Coin balance;
 
     // The origin {@link RateableAction} that forces this position
     private RateableAction action;
+    
+    public Position(RateableAction action, Coin balance) {
+        if(null==action) throw new IllegalArgumentException("action must not be null");
+        if(null==balance) throw new IllegalArgumentException("balance must not be null");
+        
+        this.id = UUID.randomUUID().getMostSignificantBits();
+        this.action = action;
+        this.balance = balance;
+    }
 
     public long getId() {
         return id;
     }
-
-    public void setId(long id) {
+    
+    protected void setId(long id) {
         this.id = id;
     }
 
@@ -49,23 +64,53 @@ public class Position implements Serializable {
         return action;
     }
 
-    public void setAction(RateableAction action) {
-        this.action = action;
-    }
-
     public Date getInsertionDate() {
         return (Date)insertionDate.clone();
     }
 
-    public void setInsertionDate(Date idate) {
-        this.insertionDate.setTime(idate.getTime());
-    }
-
     public Coin getValue() {
-        return value;
+        return balance;
     }
 
-    public void setValue(Coin value) {
-        this.value = value;
+    @Override
+    public boolean equals(Object obj) {
+        
+        if (obj == null) { 
+            return false; 
+        }
+        if (obj == this) { 
+            return true; 
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        
+        Position rhs = (Position) obj;
+        
+        return new EqualsBuilder()
+            .append(this.id, rhs.id)
+            .append(this.action, rhs.action)
+            .append(this.balance, rhs.balance)
+            .isEquals();
     }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+            .append(this.id)
+            .append(this.action)
+            .append(this.balance)
+            .toHashCode(); 
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .append("id", this.id)
+            .append("action", this.action)
+            .append("balance", this.balance)
+            .append("insertionDate", this.insertionDate)
+            .toString();
+    }
+    
 }
