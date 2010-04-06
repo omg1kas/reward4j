@@ -16,6 +16,8 @@
 
 package org.reward4j.dao;
 
+import java.util.Set;
+
 import org.reward4j.model.Account;
 import org.reward4j.model.User;
 
@@ -36,6 +38,13 @@ public interface AccountDao {
      * @return the account that belongs to the user
      */
     Account getAccountForUser(User user) throws AccountNotExistException;
+    
+    /**
+     * Retrieves all available {@link Account}s.
+     * 
+     * @return All {@link Account}s 
+     */
+    Set<Account> getAllAccounts();
     
     /**
      * Saves an {@link Account}.

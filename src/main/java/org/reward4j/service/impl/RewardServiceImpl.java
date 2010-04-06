@@ -21,8 +21,13 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.reward4j.dao.AccountDao;
+import org.reward4j.dao.AccountNotExistException;
+import org.reward4j.dao.RateableActionDao;
+import org.reward4j.dao.RateableActionNotExistException;
 import org.reward4j.model.Account;
 import org.reward4j.model.Coin;
+import org.reward4j.model.Position;
+import org.reward4j.model.RateableAction;
 import org.reward4j.model.User;
 import org.reward4j.service.RewardService;
 
@@ -36,10 +41,14 @@ public class RewardServiceImpl implements RewardService {
     private static final Logger LOG = Logger.getLogger(RewardServiceImpl.class);
     
     private AccountDao accountDao;
+    private RateableActionDao rateableActionDao;
     
-
     public void setAccountDao(AccountDao accountDao) {
         this.accountDao = accountDao;
+    }
+    
+    public void setRateableActionDao(RateableActionDao rateableActionDao) {
+        this.rateableActionDao = rateableActionDao;
     }
 
     @Override
@@ -48,20 +57,45 @@ public class RewardServiceImpl implements RewardService {
         if(StringUtils.isEmpty(actionName)) throw new IllegalArgumentException("actionName must not be empty");
         if(null==coins) throw new IllegalArgumentException("coins must not be null");
         
-        //fetch the user's account
+        // create the necessary action
+        RateableAction action = null;
+        try {
+            action = this.rateableActionDao.getAction(actionName);
+        } catch(RateableActionNotExistException e) {
+            action = new RateableAction(actionName);
+            this.rateableActionDao.saveAction(action);
+        }
         
+        // create the necessary position
+        Position position = new Position(action, coins);
+        
+        // fetch the user's account
+        Account account = null;
+        try {
+            account = this.accountDao.getAccountForUser(user);
+        } catch(AccountNotExistException e) {
+            account = new Account("main");
+        }
+
+        if(null!=account) {
+            // change the account and save it
+            account.addPosition(position);
+            this.accountDao.saveAccount(account);
+        } else {
+            LOG.warn("could not get account for user " + user);
+        }
     }
     
     @Override
-    public Account getAccount(User user) {
+    public Account getAccount(User user) throws AccountNotExistException {
         if(null==user) throw new IllegalArgumentException("user must not be null");
-        return null;
+        
+        return this.accountDao.getAccountForUser(user);
     }
     
     @Override
     public Set<Account> getAllAccounts() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.accountDao.getAllAccounts();
     }
     
 }
