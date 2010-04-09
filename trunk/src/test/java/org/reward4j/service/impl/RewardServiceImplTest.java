@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import org.reward4j.dao.AccountDao;
 import org.reward4j.dao.AccountNotExistException;
 import org.reward4j.model.Account;
@@ -54,20 +55,24 @@ public class RewardServiceImplTest {
         fail();
     }
     
-    @Test
+    @Test(expected=AccountNotExistException.class)
     public void testGetAccountOfUser() throws UserNotFoundException, AccountNotExistException {
         User user = new User(1, "john doe");
+        User user2 = new User(2, "unknown");
         
         Account account = createMock(Account.class);
         
         AccountDao accountDao = createMock(AccountDao.class);
         expect(accountDao.getAccountForUser(user)).andReturn(account);
+        expect(accountDao.getAccountForUser(user2)).andThrow(new AccountNotExistException());
         replay(accountDao);
         
         this.rewardService.setAccountDao(accountDao);
         
         Account userAccount = this.rewardService.getAccount(user);
         assertEquals(account, userAccount);
+        
+        this.rewardService.getAccount(user2);
     }
     
     @Test
