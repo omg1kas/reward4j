@@ -17,23 +17,36 @@
 package org.reward4j.service.impl;
 
 import static org.junit.Assert.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.Before;
 import org.junit.Test;
+import org.reward4j.dao.AccountDao;
+import org.reward4j.dao.AccountNotExistException;
 import org.reward4j.model.Account;
 import org.reward4j.model.Coin;
+import org.reward4j.model.User;
 import org.reward4j.service.RewardService;
+import org.reward4j.service.UserNotFoundException;
+import org.reward4j.service.UserResolver;
 import org.reward4j.test.BaseTestCase;
+
+import static org.easymock.classextension.EasyMock.*;
+
 
 /**
  * The {@code RewardServiceImplTest} tests the behaviour of {@link RewardServiceImpl}.
  * 
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  */
-public class RewardServiceImplTest extends BaseTestCase {
+public class RewardServiceImplTest {
+    private RewardServiceImpl rewardService;
     
-    private RewardService rewardService;
-    
-    public void setRewardService(RewardService rewardService) {
-        this.rewardService = rewardService;
+    @Before
+    public void setUp() {
+        this.rewardService = new RewardServiceImpl();
     }
 
     @Test
@@ -42,13 +55,37 @@ public class RewardServiceImplTest extends BaseTestCase {
     }
     
     @Test
-    public void testGetAccountOfUser() {
-        fail();
+    public void testGetAccountOfUser() throws UserNotFoundException, AccountNotExistException {
+        User user = new User(1, "john doe");
+        
+        Account account = createMock(Account.class);
+        
+        AccountDao accountDao = createMock(AccountDao.class);
+        expect(accountDao.getAccountForUser(user)).andReturn(account);
+        replay(accountDao);
+        
+        this.rewardService.setAccountDao(accountDao);
+        
+        Account userAccount = this.rewardService.getAccount(user);
+        assertEquals(account, userAccount);
     }
     
     @Test
     public void testGetAllAccounts() {
-        fail();
+        Account account1 = createMock(Account.class);
+        Account account2 = createMock(Account.class);
+        Set<Account> accounts = new HashSet<Account>();
+        accounts.add(account1);
+        accounts.add(account2);
+        
+        AccountDao accountDao = createMock(AccountDao.class);
+        expect(accountDao.getAllAccounts()).andReturn(accounts);
+        replay(accountDao);
+        
+        this.rewardService.setAccountDao(accountDao);
+        
+        Set<Account> returnedAccounts = this.rewardService.getAllAccounts();
+        assertEquals(accounts, returnedAccounts);
     }
 
 }
