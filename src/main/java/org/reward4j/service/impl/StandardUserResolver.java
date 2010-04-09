@@ -29,7 +29,6 @@ import org.reward4j.service.UserResolver;
  * context when user's actions shall be rewarded by the {@code StandardUserResolver}.
  * 
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
- *
  */
 public class StandardUserResolver implements UserResolver {
     private static ThreadLocal<User> tl = new ThreadLocal<User>();

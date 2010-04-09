@@ -24,6 +24,8 @@ import java.lang.annotation.Target;
 import org.reward4j.model.RateableAction;
 
 /**
+ * Indicates whether a type annotated with this annotation shall be analyzed using the
+ * {@link PayableInterceptor}, so that a {@link User} can be rewarded.
  * 
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  */
