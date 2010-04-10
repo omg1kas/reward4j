@@ -18,9 +18,29 @@ package org.reward4j.dao;
 
 import org.reward4j.model.RateableAction;
 
+/**
+ * The {@code RateableActionDao} is a data access layer for 
+ * {@link RateableAction}s.
+ * 
+ * @author Peter Kehren <mailto:kehren@eyeslide.de>
+ */
+
 public interface RateableActionDao {
 
+    /**
+     * Retrieves the {@link RateableAction} using the given name. If the {@link RateableAction}
+     * doesn't exist a {@link RateableActionNotExistException} will be thrown.
+     * 
+     * @param actionName name of the {@link RateableAction}
+     * @return the {@link RateableAction} with the given name
+     * @throws RateableActionNotExistException if {@link RateableAction} with the name does not exist
+     */
     RateableAction getAction(final String actionName) throws RateableActionNotExistException;
     
+    /**
+     * Saves a {@link RateableAction}.
+     * 
+     * @param action the {@link RateableAction} that shall be saved
+     */
     void saveAction(final RateableAction action);
 }
