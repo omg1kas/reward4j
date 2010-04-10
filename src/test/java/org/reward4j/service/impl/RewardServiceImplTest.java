@@ -26,13 +26,13 @@ import org.junit.Test;
 
 import org.reward4j.dao.AccountDao;
 import org.reward4j.dao.AccountNotExistException;
+import org.reward4j.dao.RateableActionDao;
+import org.reward4j.dao.RateableActionNotExistException;
 import org.reward4j.model.Account;
 import org.reward4j.model.Coin;
+import org.reward4j.model.RateableAction;
 import org.reward4j.model.User;
-import org.reward4j.service.RewardService;
 import org.reward4j.service.UserNotFoundException;
-import org.reward4j.service.UserResolver;
-import org.reward4j.test.BaseTestCase;
 
 import static org.easymock.classextension.EasyMock.*;
 
@@ -51,8 +51,32 @@ public class RewardServiceImplTest {
     }
 
     @Test
-    public void testPayForAction() {
-        fail();
+    public void testPayForAction() throws AccountNotExistException, RateableActionNotExistException {
+        
+        User user = new User(1, "john doe");
+        
+        Account account = new Account("default");
+        AccountDao accountDao = createMock(AccountDao.class);
+        expect(accountDao.getAccountForUser(user)).andReturn(account).times(4);
+        accountDao.saveAccount(account);
+        expectLastCall().times(2);
+        replay(accountDao);
+        
+        RateableAction testAction = new RateableAction("testAction");
+        RateableActionDao actionDao = createMock(RateableActionDao.class);
+        expect(actionDao.getAction("testAction")).andReturn(testAction).times(2);
+        replay(actionDao);
+        
+        this.rewardService.setAccountDao(accountDao);
+        this.rewardService.setRateableActionDao(actionDao);
+        
+        this.rewardService.payForAction(new Coin(10), "testAction", user);
+        
+        Account usersAccount = this.rewardService.getAccount(user);
+        assertEquals(new Coin(10), usersAccount.getBalance());
+        
+        this.rewardService.payForAction(new Coin(-4), "testAction", user);
+        assertEquals(new Coin(6), usersAccount.getBalance());
     }
     
     @Test(expected=AccountNotExistException.class)
