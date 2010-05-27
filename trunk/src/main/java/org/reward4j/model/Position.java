@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +28,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -37,13 +39,20 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /**
  * The {@code Position} represents a position within a user's {@link Account}. After 
  * creation a {@code Position} is immutable.
+ * 
+ * @author Peter Kehren <mailto:kehren@eyeslide.de>
+ * @author hillger.t
  */
 @Entity
+// TODO: This class should perhaps be renamed due to some name conflicts with hsqldb - position seems to be a keyword. Forther information can
+// be found here. http://hsqldb.org/doc/2.0/guide/lists-app.html. One suggestion would be: item. So @Table annotation added to class.
+@Table(name = "item")
 public class Position implements Serializable {
 	private static final long serialVersionUID = -4937858211810042799L;
 
 	// Unique identifier.
 	@Id
+	@Column(name = "itemid")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
