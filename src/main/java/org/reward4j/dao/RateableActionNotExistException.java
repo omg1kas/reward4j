@@ -22,6 +22,20 @@ package org.reward4j.dao;
  */
 public class RateableActionNotExistException extends Exception {
     private static final long serialVersionUID = 8547313170996092545L;
-    
 
+		public RateableActionNotExistException() {
+			super();
+		}
+
+		public RateableActionNotExistException(String message, Throwable cause) {
+			super(message, cause);
+		}
+
+		public RateableActionNotExistException(String message) {
+			super(message);
+		}
+
+		public RateableActionNotExistException(Throwable cause) {
+			super(cause);
+		}
 }
