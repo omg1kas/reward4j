@@ -18,6 +18,12 @@ package org.reward4j.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -28,52 +34,72 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  *   
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  */
+@Entity
 public class RateableAction implements Serializable {
     private static final long serialVersionUID = -2900499255363027395L;
     
-    // name of the rateable action that is also used as unique identifier
-	private String name;
-	
-	public RateableAction(final String name) {
+    // Unique identifier.
+  	@Id
+  	@Column(name = "actionid")
+  	@GeneratedValue(strategy = GenerationType.AUTO)
+  	private long id;
+    
+		// name of the rateable action that is also used as unique identifier
+		@Column(nullable = false)
+		private String name;
+		
+		public RateableAction(final String name) {
 	    this.name = name;
     }
-	
-	public String getName() {
-		return name;
-	}
-	
-	@Override
-	public String toString() {
-	    return new ToStringBuilder(this)
-	        .append("name", this.name)
-	        .toString();
-	}
-	
-	@Override
-	public int hashCode() {
-	    return new HashCodeBuilder()
-	        .append(this.name)
-	        .toHashCode(); 
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-	    
-	    if (obj == null) { 
-	        return false; 
-	    }
-	    if (obj == this) { 
-	        return true; 
-	    }
-	    if (obj.getClass() != getClass()) {
-	        return false;
-	    }
-	    
-	    RateableAction rhs = (RateableAction) obj;
-	    
-	    return new EqualsBuilder()
-	        .append(this.name, rhs.name)
-	        .isEquals();
-	}
+		
+		public long getId() {
+			return id;
+		}
+
+		public void setId(long id) {
+			this.id = id;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getName() {
+			return name;
+		}
+		
+		@Override
+		public String toString() {
+		    return new ToStringBuilder(this)
+		        .append("name", this.name)
+		        .toString();
+		}
+		
+		@Override
+		public int hashCode() {
+		    return new HashCodeBuilder()
+		        .append(this.name)
+		        .toHashCode(); 
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+		    
+		    if (obj == null) { 
+		        return false; 
+		    }
+		    if (obj == this) { 
+		        return true; 
+		    }
+		    if (obj.getClass() != getClass()) {
+		        return false;
+		    }
+		    
+		    RateableAction rhs = (RateableAction) obj;
+		    
+		    return new EqualsBuilder()
+		        .append(this.name, rhs.name)
+		        .isEquals();
+		}
 
 }

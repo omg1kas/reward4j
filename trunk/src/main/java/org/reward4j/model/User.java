@@ -20,6 +20,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -27,15 +35,23 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /**
  * The {@code User} represents a user in the reward4j domain. A {@code User} has an {@link Account}. 
  */
+@Entity
 public class User implements Serializable {
     private static final long serialVersionUID = -523897108104173970L;
     
     // the unique identifier of the user
+    @Id
+    @Column(name = "userid")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    
     // the name if the user
-    private String name;
+    @Column(nullable = false)
+    private String name;    
     
     // the user's accounts; normally a user has only one account
+    @OneToMany
+    @JoinColumn(name = "userid" , nullable = false)
     private List<Account> accounts = new ArrayList<Account>();
     
     public User(final long id, final String name) {
