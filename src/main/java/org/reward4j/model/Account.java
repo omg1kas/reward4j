@@ -27,8 +27,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -52,14 +52,16 @@ public class Account implements Serializable {
 	private String name;
 
 	// Points to the user of this account.
-	@ManyToOne
-	@JoinColumn
+	@OneToOne
+	@JoinColumn(name = "accountid")
 	private User user;
 
 	// Collection of all account positions for this account.
 	@OneToMany(mappedBy = "account")
 	private List<Position> positions = new ArrayList<Position>();
 
+	public Account() {}
+	
 	public Account(final String name) {
 		if (null == name)
 			throw new IllegalArgumentException("name must not be null");

@@ -50,7 +50,7 @@ public class User implements Serializable {
     private String name;    
     
     // the user's accounts; normally a user has only one account
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     @JoinColumn(name = "userid" , nullable = false)
     private List<Account> accounts = new ArrayList<Account>();
     
