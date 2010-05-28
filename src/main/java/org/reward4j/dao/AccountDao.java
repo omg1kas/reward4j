@@ -40,6 +40,16 @@ public interface AccountDao {
     Account getAccountForUser(User user) throws AccountNotExistException;
     
     /**
+     * Retrieves an account with the given name. If the account doesn't exist
+     * an {@link AccountNotExistException} will be thrown.
+     * 
+     * @param name of the {@link Account} to search for
+     * @throws AccountNotExistException if user hasn't got any account
+     * @return the account that has that name
+     */
+    Account getAccountByName(String name) throws AccountNotExistException;
+    
+    /**
      * Retrieves all available {@link Account}s.
      * 
      * @return All {@link Account}s 
