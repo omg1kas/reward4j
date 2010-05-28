@@ -42,6 +42,11 @@ public class AccountJpaDao extends JpaDaoSupport implements AccountDao {
 	}
 
 	@Override
+	public Account getAccountByName(String name) throws AccountNotExistException {
+		return (Account) this.getJpaTemplate().find("select a from Account a where a.name = ?", name);
+	}
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public Set<Account> getAllAccounts() {
 		return (Set<Account>) this.getJpaTemplate().find("select a from Account a order by a.id");

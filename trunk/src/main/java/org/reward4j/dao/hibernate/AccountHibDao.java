@@ -38,6 +38,12 @@ public class AccountHibDao implements AccountDao {
     }
     
     @Override
+		public Account getAccountByName(String name) throws AccountNotExistException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
     public Set<Account> getAllAccounts() {
         // TODO Auto-generated method stub
         return null;
