@@ -48,7 +48,7 @@ public class Account implements Serializable {
 	private long id;
 
 	// Name of this account.
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true, length = 50)
 	private String name;
 
 	// Points to the user of this account.
@@ -58,7 +58,7 @@ public class Account implements Serializable {
 
 	// Collection of all account positions for this account.
 	@OneToMany(mappedBy = "account")
-	private List<Position> positions = new ArrayList<Position>();
+	private List<Item> positions = new ArrayList<Item>();
 
 	public Account() {}
 	
@@ -94,15 +94,15 @@ public class Account implements Serializable {
 		this.user = user;
 	}
 
-	public List<Position> getPositions() {
+	public List<Item> getPositions() {
 		return positions;
 	}
 
-	protected void setPositions(List<Position> positions) {
+	protected void setPositions(List<Item> positions) {
 		this.positions = positions;
 	}
 
-	public void addPosition(Position position) {
+	public void addPosition(Item position) {
 		if (null != position) {
 			position.setAccount(this);
 			this.positions.add(position);
@@ -111,7 +111,7 @@ public class Account implements Serializable {
 
 	public Coin getBalance() {
 		Coin balance = new Coin(0);
-		for (Position position : this.positions) {
+		for (Item position : this.positions) {
 			balance = balance.add(position.getValue());
 		}
 		return balance;

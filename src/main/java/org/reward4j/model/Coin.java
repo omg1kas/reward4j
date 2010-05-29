@@ -35,8 +35,7 @@ public class Coin implements Comparable<Coin>, Serializable {
 	
 	private BigInteger amount;
 
-	protected Coin() {
-	}
+	protected Coin() {}
 
 	public Coin(double amount) {
 		this.amount = BigInteger.valueOf(Math.round(amount * 100));

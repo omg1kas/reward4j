@@ -48,6 +48,8 @@ public class RateableAction implements Serializable {
 		@Column(nullable = false)
 		private String name;
 		
+		public RateableAction() {}
+		
 		public RateableAction(final String name) {
 	    this.name = name;
     }
