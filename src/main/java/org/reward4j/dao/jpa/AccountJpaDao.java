@@ -24,13 +24,14 @@ import org.reward4j.model.User;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 
 /**
- * {@code AccountJpaDao} is the jpa specific implementation of the {@link AccountDao} using some spring specific dao support.
+ * {@code AccountJpaDao} is the jpa specific implementation of the {@link AccountDao} 
+ * using some spring specific dao support.
  * 
  * @author hillger.t
  */
 public class AccountJpaDao extends JpaDaoSupport implements AccountDao {
 	
-	// TODO: This sould be rethought somehow. 
+	// TODO: This sould be rethought somehow. If we have an user we also should already have the user's accounts.
 	@Override
 	public Account getAccountForUser(User user) throws AccountNotExistException {
 		try {
@@ -43,7 +44,12 @@ public class AccountJpaDao extends JpaDaoSupport implements AccountDao {
 
 	@Override
 	public Account getAccountByName(String name) throws AccountNotExistException {
-		return (Account) this.getJpaTemplate().find("select a from Account a where a.name = ?", name);
+		try {
+			return (Account) this.getJpaTemplate().find("select a from Account a where a.name = ?", name);
+		}
+		catch (Exception e) {
+			throw new AccountNotExistException(e);
+		}
 	}
 
 	@Override
@@ -55,7 +61,7 @@ public class AccountJpaDao extends JpaDaoSupport implements AccountDao {
 	@Override
 	public void saveAccount(Account account) {
 		if (!this.getJpaTemplate().contains(account))
-			account=this.getJpaTemplate().merge(account);
+			account = this.getJpaTemplate().merge(account);
 		this.getJpaTemplate().persist(account);
 	}
 }

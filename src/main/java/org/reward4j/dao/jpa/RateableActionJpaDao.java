@@ -24,7 +24,8 @@ import org.reward4j.model.RateableAction;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 
 /**
- * {@code AccountJpaDao} is the jpa specific implementation of the {@link AccountDao} using the spring specific dao support.
+ * {@code AccountJpaDao} is the jpa specific implementation of the {@link AccountDao} 
+ * using the spring specific dao support.
  * 
  * @author hillger.t
  */
@@ -45,6 +46,8 @@ public class RateableActionJpaDao extends JpaDaoSupport implements RateableActio
 
 	@Override
 	public void saveAction(RateableAction action) {
+		if (!this.getJpaTemplate().contains(action))
+			action = this.getJpaTemplate().merge(action);
 		this.getJpaTemplate().persist(action);
 	}
 
