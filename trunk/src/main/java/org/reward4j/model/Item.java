@@ -28,7 +28,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -44,10 +43,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @author hillger.t
  */
 @Entity
-// TODO: This class should perhaps be renamed due to some name conflicts with hsqldb - position seems to be a keyword. Forther information can
-// be found here. http://hsqldb.org/doc/2.0/guide/lists-app.html. One suggestion would be: item. So @Table annotation added to class.
-@Table(name = "item")
-public class Position implements Serializable {
+public class Item implements Serializable {
 	private static final long serialVersionUID = -4937858211810042799L;
 
 	// Unique identifier.
@@ -68,12 +64,14 @@ public class Position implements Serializable {
 	// Rate for this account position according to the underlying action.
 	private double balance;
 
-	// The origin {@link RateableAction} that forces this position
+	// The origin {@link RateableAction} that forces this item position
 	@OneToOne(targetEntity = RateableAction.class, optional = false)
 	@JoinColumn(name = "actionid")
 	private RateableAction action;
+	
+	public Item() {}
 
-	public Position(RateableAction action, Coin balance) {
+	public Item(RateableAction action, Coin balance) {
 		if (null == action)
 			throw new IllegalArgumentException("action must not be null");
 		if (null == balance)
@@ -125,7 +123,7 @@ public class Position implements Serializable {
 			return false;
 		}
 
-		Position rhs = (Position) obj;
+		Item rhs = (Item) obj;
 
 		return new EqualsBuilder().append(this.id, rhs.id).append(this.action, rhs.action).append(this.balance, rhs.balance).isEquals();
 	}

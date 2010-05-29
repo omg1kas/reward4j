@@ -34,6 +34,9 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * The {@code User} represents a user in the reward4j domain. A {@code User} has an {@link Account}. 
+ * 
+ * @author Peter Kehren <mailto:kehren@eyeslide.de>
+ * @author hillger.t
  */
 @Entity
 public class User implements Serializable {
@@ -46,13 +49,15 @@ public class User implements Serializable {
     private long id;
     
     // the name if the user
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true, length = 50)
     private String name;    
     
     // the user's accounts; normally a user has only one account
     @OneToMany(mappedBy = "user")
     @JoinColumn(name = "userid" , nullable = false)
     private List<Account> accounts = new ArrayList<Account>();
+    
+    public User() {}
     
     public User(final long id, final String name) {
         if(0>=id) throw new IllegalArgumentException("id must be positiv");
@@ -68,6 +73,11 @@ public class User implements Serializable {
 
     public String getName() {
         return name;
+    }
+    
+    public void addAccount(Account account) {
+    		this.accounts.add(account);
+    		account.setUser(this);
     }
 
     public List<Account> getAccounts() {
