@@ -28,6 +28,10 @@ import org.reward4j.model.User;
  * of the {@link AccountDao}.
  * 
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
+ * 
+ * TODO: DISCUSS: Should we really implement a Hibernate implementation
+ * when we already have jpa implemented? One of the advantages of jpa is 
+ * that there are several implementations like Hibernate or TopLink etc. 
  */
 public class AccountHibDao implements AccountDao {
 
@@ -44,6 +48,12 @@ public class AccountHibDao implements AccountDao {
 		}
 
 		@Override
+    public double getBalanceForUser(User user) {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
     public Set<Account> getAllAccounts() {
         // TODO Auto-generated method stub
         return null;
