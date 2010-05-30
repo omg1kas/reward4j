@@ -58,7 +58,7 @@ public class Account implements Serializable {
 
 	// Collection of all account positions for this account.
 	@OneToMany(mappedBy = "account")
-	private List<Item> positions = new ArrayList<Item>();
+	private List<AccountPosition> positions = new ArrayList<AccountPosition>();
 
 	public Account() {}
 	
@@ -94,15 +94,15 @@ public class Account implements Serializable {
 		this.user = user;
 	}
 
-	public List<Item> getPositions() {
+	public List<AccountPosition> getPositions() {
 		return positions;
 	}
 
-	protected void setPositions(List<Item> positions) {
+	protected void setPositions(List<AccountPosition> positions) {
 		this.positions = positions;
 	}
 
-	public void addPosition(Item position) {
+	public void addPosition(AccountPosition position) {
 		if (null != position) {
 			position.setAccount(this);
 			this.positions.add(position);
@@ -111,7 +111,7 @@ public class Account implements Serializable {
 
 	public Coin getBalance() {
 		Coin balance = new Coin(0);
-		for (Item position : this.positions) {
+		for (AccountPosition position : this.positions) {
 			balance = balance.add(position.getValue());
 		}
 		return balance;

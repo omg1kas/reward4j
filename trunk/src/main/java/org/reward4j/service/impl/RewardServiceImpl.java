@@ -26,7 +26,7 @@ import org.reward4j.dao.RateableActionDao;
 import org.reward4j.dao.RateableActionNotExistException;
 import org.reward4j.model.Account;
 import org.reward4j.model.Coin;
-import org.reward4j.model.Item;
+import org.reward4j.model.AccountPosition;
 import org.reward4j.model.RateableAction;
 import org.reward4j.model.User;
 import org.reward4j.service.RewardService;
@@ -67,7 +67,7 @@ public class RewardServiceImpl implements RewardService {
         }
         
         // create the necessary position
-        Item item = new Item(action, coins);
+        AccountPosition position = new AccountPosition(action, coins);
         
         // fetch the user's account
         Account account = null;
@@ -79,7 +79,7 @@ public class RewardServiceImpl implements RewardService {
 
         if(null!=account) {
             // change the account and save it
-            account.addPosition(item);
+            account.addPosition(position);
             this.accountDao.saveAccount(account);
         } else {
             LOG.warn("could not get account for user " + user);

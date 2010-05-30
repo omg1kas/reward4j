@@ -43,12 +43,12 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @author hillger.t
  */
 @Entity
-public class Item implements Serializable {
+public class AccountPosition implements Serializable {
 	private static final long serialVersionUID = -4937858211810042799L;
 
 	// Unique identifier.
 	@Id
-	@Column(name = "itemid")
+	@Column(name = "accountpositionid")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
@@ -64,14 +64,14 @@ public class Item implements Serializable {
 	// Rate for this account position according to the underlying action.
 	private double balance;
 
-	// The origin {@link RateableAction} that forces this item position
+	// The origin {@link RateableAction} that forces this AccountPosition.
 	@OneToOne(targetEntity = RateableAction.class, optional = false)
 	@JoinColumn(name = "actionid")
 	private RateableAction action;
 	
-	public Item() {}
+	public AccountPosition() {}
 
-	public Item(RateableAction action, Coin balance) {
+	public AccountPosition(RateableAction action, Coin balance) {
 		if (null == action)
 			throw new IllegalArgumentException("action must not be null");
 		if (null == balance)
@@ -123,7 +123,7 @@ public class Item implements Serializable {
 			return false;
 		}
 
-		Item rhs = (Item) obj;
+		AccountPosition rhs = (AccountPosition) obj;
 
 		return new EqualsBuilder().append(this.id, rhs.id).append(this.action, rhs.action).append(this.balance, rhs.balance).isEquals();
 	}

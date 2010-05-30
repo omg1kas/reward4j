@@ -21,13 +21,17 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.reward4j.model.Amount;
 import org.reward4j.model.RateableAction;
+import org.reward4j.model.SimpleAmount;
+import org.reward4j.model.User;
 
 /**
  * Indicates whether a type annotated with this annotation shall be analyzed using the
  * {@link PayableInterceptor}, so that a {@link User} can be rewarded.
  * 
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
+ * @author hillger.t
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
@@ -47,5 +51,12 @@ public @interface Payable {
      * @return amount of the reward
      */
     String coins();
-
+    
+    /**
+     * Points to a class which implements how an {@link Amount}'s rate should 
+     * be retrieved or calculated - {@link SimpleAmount} is the default.
+     * 
+     * @return class which implements the {@link Amount} interface
+     */
+    Class<? extends Amount> amountClass() default SimpleAmount.class;
 }

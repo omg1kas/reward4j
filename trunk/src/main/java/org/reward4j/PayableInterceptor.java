@@ -20,6 +20,7 @@ import java.lang.reflect.Method;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.reward4j.model.Amount;
 import org.reward4j.model.Coin;
 import org.reward4j.model.User;
 import org.reward4j.service.RewardService;
@@ -57,9 +58,11 @@ public class PayableInterceptor implements AfterReturningAdvice {
 
             if (null != payable) {
 
-                double amount = 0.0;
+                double value = 0.0;
                 try {
-                    amount = Double.valueOf(payable.coins());
+                	Amount amount = payable.amountClass().newInstance();
+                	amount.setAmount(Double.valueOf(payable.coins()));
+                	value = amount.getAmount();
                 } catch (NumberFormatException fe) {
                     LOG.error("could not convert " + payable.coins() + " to double amount value!", fe);
                 }
@@ -70,7 +73,7 @@ public class PayableInterceptor implements AfterReturningAdvice {
                 }
 
                 if (null != this.rewardService) {
-                    Coin coins = new Coin(amount);
+                    Coin coins = new Coin(value);
                     try {
                         
                         // fetch user and pay for action execution
