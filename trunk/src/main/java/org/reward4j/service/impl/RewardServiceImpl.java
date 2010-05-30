@@ -94,6 +94,12 @@ public class RewardServiceImpl implements RewardService {
     }
     
     @Override
+    public boolean hasBalance(User user, double amount) {
+      // TODO Auto-generated method stub
+      return false;
+    }
+
+    @Override
     public Set<Account> getAllAccounts() {
         return this.accountDao.getAllAccounts();
     }
