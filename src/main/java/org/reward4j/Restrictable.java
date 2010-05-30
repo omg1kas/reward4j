@@ -38,9 +38,12 @@ public @interface Restrictable {
    * @return amount of the reward
    */
   double coins() default 0.0;
-
+  
   /**
+   * Describes how a validation of a restrictable action should be performed. Normaly
+   * the amount should be higher. But other situations could maybe also occur.
+   * 
    * @return
    */
-  Comparison comparison() default Comparison.HIGHER;
+  Class<? extends RestrictionDecider> decider() default BalanceHigherDecider.class;
 }

@@ -31,11 +31,13 @@ import org.springframework.orm.jpa.support.JpaDaoSupport;
  */
 public class AccountJpaDao extends JpaDaoSupport implements AccountDao {
 	
-	// TODO: This sould be rethought somehow. If we have an user we also should already have the user's accounts.
+  // TODO: DICUSS: This sould be rethought somehow. If we have an user we also
+  // should already have the user's accounts. Mark this method as deprecated.
 	@Override
+	@Deprecated
 	public Account getAccountForUser(User user) throws AccountNotExistException {
 		try {
-			return user.getAccounts().get(0);
+			return user.getAccount();
 		}
 		catch (Exception e) {
 			throw new AccountNotExistException(e);

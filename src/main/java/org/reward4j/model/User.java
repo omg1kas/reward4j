@@ -17,8 +17,6 @@
 package org.reward4j.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +24,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -52,10 +50,10 @@ public class User implements Serializable {
     @Column(nullable = false, unique = true, length = 50)
     private String name;    
     
-    // the user's accounts; normally a user has only one account
-    @OneToMany(mappedBy = "user")
-    @JoinColumn(name = "userid" , nullable = false)
-    private List<Account> accounts = new ArrayList<Account>();
+    // the user's account
+    @OneToOne
+    @JoinColumn(name = "accountid", nullable = false)
+    private Account account;
     
     public User() {}
     
@@ -74,18 +72,13 @@ public class User implements Serializable {
     public String getName() {
         return name;
     }
-    
-    public void addAccount(Account account) {
-    		this.accounts.add(account);
-    		account.setUser(this);
+
+    public Account getAccount() {
+        return account;
     }
 
-    public List<Account> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
+    public void setAccount(Account account) {
+        this.account = account;
     }
     
     @Override

@@ -94,9 +94,9 @@ public class RewardServiceImpl implements RewardService {
     }
     
     @Override
-    public boolean hasBalance(User user, double amount) {
+    public double getBalance(User user) {
       // TODO Auto-generated method stub
-      return false;
+      return 0;
     }
 
     @Override
