@@ -26,7 +26,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -52,8 +51,7 @@ public class Account implements Serializable {
 	private String name;
 
 	// Points to the user of this account.
-	@OneToOne
-	@JoinColumn(name = "accountid")
+  @OneToOne(mappedBy = "account")
 	private User user;
 
 	// Collection of all account positions for this account.

@@ -25,14 +25,13 @@ import org.reward4j.service.UserResolver;
 import org.springframework.aop.MethodBeforeAdvice;
 
 /**
- * The {@code RestrictableInterceptor} is looking for methods which are annotated by
- * the {@link Restrictable} annotation. If so the execution of these methods will only
- * get processed if the {@link RewardService} could possitivly check some account balance
- * confition.
- * 
+ * The {@code RestrictableInterceptor} is looking for methods which are
+ * annotated by the {@link Restrictable} annotation. If so the execution of
+ * these methods will only get processed if the {@link RewardService} could
+ * possitivly check some account balance confition.
  * <p/>
- * The most necessary information are described by the according {@link Restrictable}
- * annotation.
+ * The most necessary information are described by the according
+ * {@link Restrictable} annotation.
  * 
  * @author hillger.t
  */
@@ -53,13 +52,14 @@ public class RestrictableInterceptor implements MethodBeforeAdvice {
   public void before(Method method, Object[] args, Object target) throws Throwable {
     try {
       if (method.isAnnotationPresent(Restrictable.class)) {
-        Restrictable restrictable = method.getAnnotation(Restrictable.class);
-
         User user = this.userResolver.getUser();
-        double amount = restrictable.coins();
+        double amount = rewardService.getBalance(user);
 
-        if (rewardService.hasBalance(user, amount)) {
-          throw new RuntimeException("the user has not the necessary account balance to execute this action");
+        Restrictable restrictable = method.getAnnotation(Restrictable.class);
+        RestrictionDecider decider = restrictable.decider().newInstance();
+
+        if (decider.decide(amount, restrictable.coins())) {
+          throw new RestrictionException("the user has not the necessary account balance to execute this action");
         }
       }
     }
