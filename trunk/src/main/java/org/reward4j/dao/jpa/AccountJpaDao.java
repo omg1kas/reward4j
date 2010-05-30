@@ -53,6 +53,10 @@ public class AccountJpaDao extends JpaDaoSupport implements AccountDao {
 			throw new AccountNotExistException(e);
 		}
 	}
+	
+  public double getBalanceForUser(User user) {
+    return (Double) this.getJpaTemplate().find("select sum(p.balance) from Account a join a.positions p where a.user = ?", user).get(0);
+  }
 
 	@Override
 	@SuppressWarnings("unchecked")

@@ -49,6 +49,8 @@ public interface AccountDao {
      */
     Account getAccountByName(String name) throws AccountNotExistException;
     
+    double getBalanceForUser(User user); 
+    
     /**
      * Retrieves all available {@link Account}s.
      * 

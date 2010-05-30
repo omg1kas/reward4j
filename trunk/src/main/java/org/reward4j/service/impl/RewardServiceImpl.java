@@ -95,13 +95,13 @@ public class RewardServiceImpl implements RewardService {
     
     @Override
     public double getBalance(User user) {
-      // TODO Auto-generated method stub
-      return 0;
+        if(null==user) throw new IllegalArgumentException("user must not be null");
+        
+        return this.accountDao.getBalanceForUser(user);
     }
 
     @Override
     public Set<Account> getAllAccounts() {
         return this.accountDao.getAllAccounts();
-    }
-    
+    }    
 }
