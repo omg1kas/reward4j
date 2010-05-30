@@ -52,6 +52,15 @@ public interface RewardService {
 	Account getAccount(User user) throws AccountNotExistException;
 	
 	/**
+	 * Checks an {@link User}'s account balance. 
+	 * 
+	 * @param user The user to check
+	 * @param amount The amount to check for
+	 * @return True if the balance is reached - false otherwiseds
+	 */
+	boolean hasBalance(User user, double amount);
+	
+	/**
 	 * Gets all available {@link Account}s.
 	 * 
 	 * @return all available {@link Account}s.
