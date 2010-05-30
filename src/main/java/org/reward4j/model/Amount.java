@@ -13,23 +13,23 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.reward4j.pay;
+package org.reward4j.model;
 
 /**
- * A very simple implementation of the {@link Amount} interface.
+ * Interface describing how some amounts can can be retrieved. Implementations can be configured with the {@link Payable} annotaion 
+ * to handle individual purpose needs for retrieving
  * 
  * @author hillger.t
  */
-public class SimpleAmount implements Amount {
-	private double amount = 0d;
-	
-	@Override
-	public double getAmount() {		
-		return amount;
-	}
+public interface Amount {
 
-	@Override
-	public void setAmount(double amount) {
-		this.amount = amount;	
-	}
+	/**
+	 * Returns an amount which should be payed when a rateable action was successfully executed.
+	 */
+	public double getAmount();
+	
+	/**
+	 * Sets the given amount value that should be payed for a rateable action.
+	 */
+	public void setAmount(double amount);
 }
