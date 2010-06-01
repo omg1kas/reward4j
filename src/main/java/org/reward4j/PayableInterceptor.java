@@ -61,7 +61,7 @@ public class PayableInterceptor implements AfterReturningAdvice {
                 double value = 0.0;
                 try {
                 	Amount amount = payable.amountClass().newInstance();
-                	amount.setAmount(Double.valueOf(payable.coins()));
+                	amount.setAmount(payable.coins());
                 	value = amount.getAmount();
                 } catch (NumberFormatException fe) {
                     LOG.error("could not convert " + payable.coins() + " to double amount value!", fe);

@@ -16,20 +16,21 @@
 package org.reward4j.model;
 
 /**
- * Interface describing how some amounts can can be retrieved. Implementations can be configured with the {@link Payable} annotaion 
- * to handle individual purpose needs for retrieving
+ * Interface describing how some amount can be retrieved. Implementations can be
+ * configured within the {@link Payable} annotaion to handle individual purpose
+ * needs for retrieving amounts.
  * 
  * @author hillger.t
  */
 public interface Amount {
 
 	/**
-	 * Returns an amount which should be payed when a rateable action was successfully executed.
+	 * Returns an amount which should be payed when a {@link RateableAction} action was successfully executed.
 	 */
 	public double getAmount();
 	
 	/**
-	 * Sets the given amount value that should be payed for a rateable action.
+	 * Sets the given amount that should be payed for a {@link RateableAction}.
 	 */
 	public void setAmount(double amount);
 }
