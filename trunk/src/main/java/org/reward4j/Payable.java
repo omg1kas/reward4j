@@ -50,7 +50,7 @@ public @interface Payable {
      * 
      * @return amount of the reward
      */
-    String coins();
+    double coins();
     
     /**
      * Points to a class which implements how an {@link Amount}'s rate should 

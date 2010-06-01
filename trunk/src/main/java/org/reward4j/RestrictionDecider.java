@@ -16,19 +16,21 @@
 package org.reward4j;
 
 /**
- * {@code RestrictionDecider} implementations decide on base of some {@link user}'s account balance.
+ * {@code RestrictionDecider} implementations decide on base of some
+ * {@link user}'s account balance.
  * 
  * @author hillger.t
  */
 public interface RestrictionDecider {
-  
+
   /**
-   * Some decision results in a boolean value. 
+   * Some decision results in a boolean value.
    * 
    * @param userBalance the user's balance
    * @param value the reference value for validating
    * @return boolean
    */
-  //TODO: DICUSS: Is return type boolean okay or should it be void with some exception thrown.
+  // TODO: DICUSS: Is return type boolean okay or should it be void with some
+  // exception thrown?
   boolean decide(double userBalance, double value);
 }
