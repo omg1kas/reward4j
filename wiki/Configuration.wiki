@@ -1,0 +1,6 @@
+#labels Featured,Phase-Design,Phase-Implementation
+= Configuration=
+
+== Details ==
+
+Some Spring configurtion issue will follow here...
