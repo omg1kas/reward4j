@@ -1,10 +1,6 @@
+#labels Featured
 = Possible usage scenarios =
 
+== Gratitude knowledge sharing ==
 
-Possable usage
->
-> - Rewarding employees of a company, if they share and deposite their 
-> knowledge with colleagues within a kind of enterprise platform. By 
-> providing the information it will get paid with reward4j's virtual 
-> currency. The company can later gratitude in a form that is acceptable 
-> for the company (monetarily, leisure) to the employee for his commitment.
+Rewarding employees of a company, if they share and deposite their knowledge with colleagues within some kind of enterprise platform. By providing the information it will get paid with reward4j's virtual currency. The commitment can later be gratitude to the employee in a form that is acceptable for the company (monetarily, leisure).
