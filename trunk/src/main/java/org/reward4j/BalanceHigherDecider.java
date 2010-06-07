@@ -23,7 +23,7 @@ package org.reward4j;
  * @author hillger.t
  */
 public class BalanceHigherDecider implements RestrictionDecider {
-  
+
   public boolean decide(double userBalance, double value) {
     return userBalance > value;
   }

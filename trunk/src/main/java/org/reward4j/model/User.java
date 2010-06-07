@@ -31,91 +31,86 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * The {@code User} represents a user in the reward4j domain. A {@code User} has an {@link Account}. 
+ * The {@code User} represents a user in the reward4j domain. A {@code User} has
+ * an {@link Account}.
  * 
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  * @author hillger.t
  */
 @Entity
 public class User implements Serializable {
-    private static final long serialVersionUID = -523897108104173970L;
-    
-    // the unique identifier of the user
-    @Id
-    @Column(name = "userid")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    
-    // the name if the user
-    @Column(nullable = false, unique = true, length = 50)
-    private String name;    
-    
-    // the user's account
-    @OneToOne
-    @JoinColumn(name = "accountid", nullable = false)
-    private Account account;
-    
-    public User() {}
-    
-    public User(final long id, final String name) {
-        if(0>=id) throw new IllegalArgumentException("id must be positiv");
-        if(null==name) throw new IllegalArgumentException("name must not be null");
-        
-        this.id = id;
-        this.name = name;
+  private static final long serialVersionUID = -523897108104173970L;
+
+  // the unique identifier of the user
+  @Id
+  @Column(name = "userid")
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private long id;
+
+  // the name if the user
+  @Column(nullable = false, unique = true, length = 50)
+  private String name;
+
+  // the user's account
+  @OneToOne
+  @JoinColumn(name = "accountid", nullable = false)
+  private Account account;
+
+  public User() {
+  }
+
+  public User(final long id, final String name) {
+    if (0 >= id)
+      throw new IllegalArgumentException("id must be positiv");
+    if (null == name)
+      throw new IllegalArgumentException("name must not be null");
+
+    this.id = id;
+    this.name = name;
+  }
+
+  public long getId() {
+    return id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public Account getAccount() {
+    return account;
+  }
+
+  public void setAccount(Account account) {
+    this.account = account;
+  }
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this).append("id", this.id).append("name", this.name).toString();
+  }
+
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder().append(this.id).append(this.name).toHashCode();
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+
+    if (obj == null) {
+      return false;
+    }
+    if (obj == this) {
+      return true;
+    }
+    if (obj.getClass() != getClass()) {
+      return false;
     }
 
-    public long getId() {
-        return id;
-    }
+    User rhs = (User) obj;
 
-    public String getName() {
-        return name;
-    }
+    return new EqualsBuilder().append(this.id, rhs.id).append(this.name, rhs.name).isEquals();
+  }
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-    
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-            .append("id", this.id)
-            .append("name", this.name)
-            .toString();
-    }
-    
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(this.id)
-            .append(this.name)
-            .toHashCode(); 
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        
-        if (obj == null) { 
-            return false; 
-        }
-        if (obj == this) { 
-            return true; 
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        
-        User rhs = (User) obj;
-        
-        return new EqualsBuilder()
-            .append(this.id, rhs.id)
-            .append(this.name, rhs.name)
-            .isEquals();
-    }
-    
 }

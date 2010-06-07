@@ -19,23 +19,25 @@ package org.reward4j.service;
 import org.reward4j.model.User;
 
 /**
- * The {@code UserResolver} describes how the concrete {@link User} can be fetched.
+ * The {@code UserResolver} describes how the concrete {@link User} can be
+ * fetched.
  * <p/>
- * The {code UserResolver} is the entry point to customize the reward4j framework, when
- * the standard user resolving shall not be used.
- *  
+ * The {code UserResolver} is the entry point to customize the reward4j
+ * framework, when the standard user resolving shall not be used.
+ * 
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
- *
+ * 
  */
 public interface UserResolver {
 
-    /**
-     * Retrieves the concrete {@link User} that is represented by 
-     * the key value.
-     * 
-     * @param userId the key of the {@link User}
-     * @return the {@link User}
-     * @throws UserNotFoundException if no user belongs to given key
-     */
-	User getUser() throws UserNotFoundException;
+  /**
+   * Retrieves the concrete {@link User} that is represented by the key value.
+   * 
+   * @param userId
+   *          the key of the {@link User}
+   * @return the {@link User}
+   * @throws UserNotFoundException
+   *           if no user belongs to given key
+   */
+  User getUser() throws UserNotFoundException;
 }

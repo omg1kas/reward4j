@@ -21,21 +21,21 @@ package org.reward4j.dao;
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  */
 public class RateableActionNotExistException extends Exception {
-    private static final long serialVersionUID = 8547313170996092545L;
+  private static final long serialVersionUID = 8547313170996092545L;
 
-		public RateableActionNotExistException() {
-			super();
-		}
+  public RateableActionNotExistException() {
+    super();
+  }
 
-		public RateableActionNotExistException(String message, Throwable cause) {
-			super(message, cause);
-		}
+  public RateableActionNotExistException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-		public RateableActionNotExistException(String message) {
-			super(message);
-		}
+  public RateableActionNotExistException(String message) {
+    super(message);
+  }
 
-		public RateableActionNotExistException(Throwable cause) {
-			super(cause);
-		}
+  public RateableActionNotExistException(Throwable cause) {
+    super(cause);
+  }
 }
