@@ -27,8 +27,8 @@ import org.reward4j.model.SimpleAmount;
 import org.reward4j.model.User;
 
 /**
- * Indicates whether a type annotated with this annotation shall be analyzed using the
- * {@link PayableInterceptor}, so that a {@link User} can be rewarded.
+ * Indicates whether a type annotated with this annotation shall be analyzed
+ * using the {@link PayableInterceptor}, so that a {@link User} can be rewarded.
  * 
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  * @author hillger.t
@@ -37,26 +37,25 @@ import org.reward4j.model.User;
 @Target(ElementType.METHOD)
 public @interface Payable {
 
-    /**
-     * Describes the name of the {@link RateableAction}
-     * 
-     * @return name of the action
-     */
-    String action();
+  /**
+   * Describes the name of the {@link RateableAction}
+   * 
+   * @return name of the action
+   */
+  String action();
 
-    /**
-     * Describes the amount of the reward of the action's 
-     * execution.
-     * 
-     * @return amount of the reward
-     */
-    double coins();
-    
-    /**
-     * Points to a class which implements how an {@link Amount}'s rate should 
-     * be retrieved or calculated - {@link SimpleAmount} is the default.
-     * 
-     * @return class which implements the {@link Amount} interface
-     */
-    Class<? extends Amount> amountClass() default SimpleAmount.class;
+  /**
+   * Describes the amount of the reward of the action's execution.
+   * 
+   * @return amount of the reward
+   */
+  double coins();
+
+  /**
+   * Points to a class which implements how an {@link Amount}'s rate should be
+   * retrieved or calculated - {@link SimpleAmount} is the default.
+   * 
+   * @return class which implements the {@link Amount} interface
+   */
+  Class<? extends Amount> amountClass() default SimpleAmount.class;
 }

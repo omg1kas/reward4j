@@ -16,13 +16,14 @@
 package org.reward4j;
 
 /**
- * {@code RestrictionException}s will get thrown in the case of situations where
- * a {@link RestrictionDecider} implementation decides that some method invokation
- * is not welcome and should be aborted.
+ * {@code RestrictionException} will be thrown in the case of situations where
+ * a {@link RestrictionDecider} decides that some method
+ * invocation is not welcome and should be aborted.
  * 
  * @author hillger.t
  */
 public class RestrictionException extends RuntimeException {
+  private static final long serialVersionUID = 471477797035042663L;
 
   public RestrictionException() {
     super();

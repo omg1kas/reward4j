@@ -24,115 +24,110 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * {@code Coin} is equivalent to the design pattern <code>Money</code>
- * of <i>Martin Fowler</i>. {@code Coin} is a <code>ValueObject</code>, 
- * that is immutable after creation. Therefore no setters exist. 
- *
+ * {@code Coin} is equivalent to the design pattern <code>Money</code> of
+ * <i>Martin Fowler</i>. {@code Coin} is a <code>ValueObject</code>, that is
+ * immutable after creation. Therefore no setters exist.
+ * 
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  */
 public class Coin implements Comparable<Coin>, Serializable {
-	private static final long serialVersionUID = 3724649778476283564L;
-	
-	private BigInteger amount;
+  private static final long serialVersionUID = 3724649778476283564L;
 
-	protected Coin() {}
+  private BigInteger amount;
 
-	public Coin(double amount) {
-		this.amount = BigInteger.valueOf(Math.round(amount * 100));
-	}
+  protected Coin() {
+  }
 
-	public Coin(long amount) {
-		this.amount = BigInteger.valueOf(amount * 100);
-	}
+  public Coin(double amount) {
+    this.amount = BigInteger.valueOf(Math.round(amount * 100));
+  }
 
-	protected Coin(BigInteger amountInPennies) {
-		this.amount = amountInPennies;
-	}
+  public Coin(long amount) {
+    this.amount = BigInteger.valueOf(amount * 100);
+  }
 
-	protected BigInteger getAmount() {
-		return this.amount;
-	}
+  protected Coin(BigInteger amountInPennies) {
+    this.amount = amountInPennies;
+  }
 
-	public Coin add(Coin c) {
-		return createNewInstance(this.amount.add(c.amount));
-	}
+  protected BigInteger getAmount() {
+    return this.amount;
+  }
 
-	public Coin subtract(Coin c) {
-		return createNewInstance(this.amount.add(c.amount.negate()));
-	}
+  public Coin add(Coin c) {
+    return createNewInstance(this.amount.add(c.amount));
+  }
 
-	public Coin negate() {
-		return createNewInstance(this.amount.negate());
-	}
+  public Coin subtract(Coin c) {
+    return createNewInstance(this.amount.add(c.amount.negate()));
+  }
 
-	public Coin multiply(double value) {
-		return createNewInstance(this.amount() * value);
-	}
+  public Coin negate() {
+    return createNewInstance(this.amount.negate());
+  }
 
-	public Coin div(double value) {
-		if (value > 0) {
-			return createNewInstance(this.amount() / value);
-		} else {
-			return createNewInstance(this.amount);
-		}
-	}
+  public Coin multiply(double value) {
+    return createNewInstance(this.amount() * value);
+  }
 
-	public double amount() {
-		return this.amount.doubleValue() / 100;
-	}
+  public Coin div(double value) {
+    if (value > 0) {
+      return createNewInstance(this.amount() / value);
+    } else {
+      return createNewInstance(this.amount);
+    }
+  }
 
-	public int compareTo(Coin coin) {
-		return this.amount.compareTo(coin.amount);
-	}
+  public double amount() {
+    return this.amount.doubleValue() / 100;
+  }
 
-	public boolean greaterThan(Coin c) {
-		return (this.compareTo(c) == 1);
-	}
+  public int compareTo(Coin coin) {
+    return this.amount.compareTo(coin.amount);
+  }
 
-	public boolean lessThan(Coin c) {
-		return (this.compareTo(c) == -1);
-	}
+  public boolean greaterThan(Coin c) {
+    return (this.compareTo(c) == 1);
+  }
 
-	protected Coin createNewInstance(double amount) {
-		return new Coin(amount);
-	}
+  public boolean lessThan(Coin c) {
+    return (this.compareTo(c) == -1);
+  }
 
-	protected Coin createNewInstance(BigInteger amount) {
-		return new Coin(amount);
-	}
+  protected Coin createNewInstance(double amount) {
+    return new Coin(amount);
+  }
 
-	@Override
-	public boolean equals(Object obj) {
-        
-        if (obj == null) { 
-            return false; 
-        }
-        if (obj == this) { 
-            return true; 
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        
-        Coin rhs = (Coin) obj;
-        
-        return new EqualsBuilder()
-            .append(this.amount, rhs.amount)
-            .isEquals();
-	}
+  protected Coin createNewInstance(BigInteger amount) {
+    return new Coin(amount);
+  }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-            .append(this.amount)
-            .toHashCode(); 
+  @Override
+  public boolean equals(Object obj) {
+
+    if (obj == null) {
+      return false;
+    }
+    if (obj == this) {
+      return true;
+    }
+    if (obj.getClass() != getClass()) {
+      return false;
     }
 
-    @Override
-	public String toString() {
-		return new ToStringBuilder(this)
-		    .append("amount", this.amount)
-			.toString();
-	}
+    Coin rhs = (Coin) obj;
+
+    return new EqualsBuilder().append(this.amount, rhs.amount).isEquals();
+  }
+
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder().append(this.amount).toHashCode();
+  }
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this).append("amount", this.amount).toString();
+  }
 
 }

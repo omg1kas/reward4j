@@ -38,109 +38,110 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  */
 @Entity
 public class Account implements Serializable {
-	private static final long serialVersionUID = -3766204445266143843L;
+  private static final long serialVersionUID = -3766204445266143843L;
 
-	// Unique identifier.
-	@Id
-	@Column(name = "accountid")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+  // Unique identifier.
+  @Id
+  @Column(name = "accountid")
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private long id;
 
-	// Name of this account.
-	@Column(nullable = false, unique = true, length = 50)
-	private String name;
+  // Name of this account.
+  @Column(nullable = false, unique = true, length = 50)
+  private String name;
 
-	// Points to the user of this account.
+  // Points to the user of this account.
   @OneToOne(mappedBy = "account")
-	private User user;
+  private User user;
 
-	// Collection of all account positions for this account.
-	@OneToMany(mappedBy = "account")
-	private List<AccountPosition> positions = new ArrayList<AccountPosition>();
+  // Collection of all account positions for this account.
+  @OneToMany(mappedBy = "account")
+  private List<AccountPosition> positions = new ArrayList<AccountPosition>();
 
-	public Account() {}
-	
-	public Account(final String name) {
-		if (null == name)
-			throw new IllegalArgumentException("name must not be null");
+  public Account() {
+  }
 
-		this.id = UUID.randomUUID().getMostSignificantBits();
-		this.name = name;
-	}
+  public Account(final String name) {
+    if (null == name)
+      throw new IllegalArgumentException("name must not be null");
 
-	public long getId() {
-		return id;
-	}
+    this.id = UUID.randomUUID().getMostSignificantBits();
+    this.name = name;
+  }
 
-	protected void setId(long id) {
-		this.id = id;
-	}
+  public long getId() {
+    return id;
+  }
 
-	public String getName() {
-		return name;
-	}
+  protected void setId(long id) {
+    this.id = id;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public User getUser() {
-		return user;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+  public User getUser() {
+    return user;
+  }
 
-	public List<AccountPosition> getPositions() {
-		return positions;
-	}
+  public void setUser(User user) {
+    this.user = user;
+  }
 
-	protected void setPositions(List<AccountPosition> positions) {
-		this.positions = positions;
-	}
+  public List<AccountPosition> getPositions() {
+    return positions;
+  }
 
-	public void addPosition(AccountPosition position) {
-		if (null != position) {
-			position.setAccount(this);
-			this.positions.add(position);
-		}
-	}
+  protected void setPositions(List<AccountPosition> positions) {
+    this.positions = positions;
+  }
 
-	public Coin getBalance() {
-		Coin balance = new Coin(0);
-		for (AccountPosition position : this.positions) {
-			balance = balance.add(position.getValue());
-		}
-		return balance;
-	}
+  public void addPosition(AccountPosition position) {
+    if (null != position) {
+      position.setAccount(this);
+      this.positions.add(position);
+    }
+  }
 
-	@Override
-	public boolean equals(Object obj) {
+  public Coin getBalance() {
+    Coin balance = new Coin(0);
+    for (AccountPosition position : this.positions) {
+      balance = balance.add(position.getValue());
+    }
+    return balance;
+  }
 
-		if (obj == null) {
-			return false;
-		}
-		if (obj == this) {
-			return true;
-		}
-		if (obj.getClass() != getClass()) {
-			return false;
-		}
+  @Override
+  public boolean equals(Object obj) {
 
-		Account rhs = (Account) obj;
+    if (obj == null) {
+      return false;
+    }
+    if (obj == this) {
+      return true;
+    }
+    if (obj.getClass() != getClass()) {
+      return false;
+    }
 
-		return new EqualsBuilder().append(this.id, rhs.id).append(this.name, rhs.name).isEquals();
-	}
+    Account rhs = (Account) obj;
 
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder().append(this.id).append(this.name).toHashCode();
-	}
+    return new EqualsBuilder().append(this.id, rhs.id).append(this.name, rhs.name).isEquals();
+  }
 
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this).append("id", this.id).append("name", this.name).toString();
-	}
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder().append(this.id).append(this.name).toHashCode();
+  }
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this).append("id", this.id).append("name", this.name).toString();
+  }
 
 }

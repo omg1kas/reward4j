@@ -24,45 +24,50 @@ import org.reward4j.model.Coin;
 import org.reward4j.model.User;
 
 /**
- * The {@code RewardService} represents the main service within the 
- * reward4j framework.
+ * The {@code RewardService} represents the main service within the reward4j
+ * framework.
  * <p/>
- * This service is used by the {@link PayableInterceptor} if a recognized
- * action shall be rewarded for a {@link User}.
+ * This service is used by the {@link PayableInterceptor} if a recognized action
+ * shall be rewarded for a {@link User}.
  * 
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  */
 public interface RewardService {
 
-    /**
-     * Executes the payment of an action that a user has done.
-     * 
-     * @param coins The amount of the payment
-     * @param actionName The name of the action
-     * @param user The user who has done the action
-     */
-	void payForAction(Coin coins, String actionName, User user);
-	
-	/**
-	 * Retrieves the {@link Account} of an {@link User}.
-	 * 
-	 * @param user the owner of the {@link Account}
-	 * @return the user's {@link Account}
-	 */
-	Account getAccount(User user) throws AccountNotExistException;
-	
-	/**
-	 * Returns an {@link User}'s account balance. 
-	 * 
-	 * @param user The user to check
-	 */
-	double getBalance(User user);
-	
-	/**
-	 * Gets all available {@link Account}s.
-	 * 
-	 * @return all available {@link Account}s.
-	 */
-	Set<Account> getAllAccounts();
-	
+  /**
+   * Executes the payment of an action that a user has done.
+   * 
+   * @param coins
+   *          The amount of the payment
+   * @param actionName
+   *          The name of the action
+   * @param user
+   *          The user who has done the action
+   */
+  void payForAction(Coin coins, String actionName, User user);
+
+  /**
+   * Retrieves the {@link Account} of an {@link User}.
+   * 
+   * @param user
+   *          the owner of the {@link Account}
+   * @return the user's {@link Account}
+   */
+  Account getAccount(User user) throws AccountNotExistException;
+
+  /**
+   * Returns an {@link User}'s account balance.
+   * 
+   * @param user
+   *          The user to check
+   */
+  double getBalance(User user);
+
+  /**
+   * Gets all available {@link Account}s.
+   * 
+   * @return all available {@link Account}s.
+   */
+  Set<Account> getAllAccounts();
+
 }

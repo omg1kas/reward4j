@@ -30,8 +30,8 @@ public class AccountTest {
     @Test
     public void testGetBalance() {
         RateableAction action = new RateableAction("action");
-        Position position1 = new Position(action, new Coin(4));
-        Position position2 = new Position(action, new Coin(6));
+        AccountPosition position1 = new AccountPosition(action, new Coin(4));
+        AccountPosition position2 = new AccountPosition(action, new Coin(6));
         
         Account account = new Account("testaccount");
         account.addPosition(position1);

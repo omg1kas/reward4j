@@ -26,8 +26,10 @@ public interface RestrictionDecider {
   /**
    * Some decision results in a boolean value.
    * 
-   * @param userBalance the user's balance
-   * @param value the reference value for validating
+   * @param userBalance
+   *          the user's balance
+   * @param value
+   *          the reference value for validating
    * @return boolean
    */
   // TODO: DICUSS: Is return type boolean okay or should it be void with some

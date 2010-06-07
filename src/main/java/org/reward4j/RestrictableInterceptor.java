@@ -28,7 +28,7 @@ import org.springframework.aop.MethodBeforeAdvice;
  * The {@code RestrictableInterceptor} is looking for methods which are
  * annotated by the {@link Restrictable} annotation. If so the execution of
  * these methods will only get processed if the {@link RewardService} could
- * possitivly check some account balance confition.
+ * possitivly check some account balance condition.
  * <p/>
  * The most necessary information are described by the according
  * {@link Restrictable} annotation.
@@ -62,8 +62,7 @@ public class RestrictableInterceptor implements MethodBeforeAdvice {
           throw new RestrictionException("the user has not the necessary account balance to execute this action");
         }
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       LOG.warn("action execution is not allowed due to account balance", e);
       throw e;
     }

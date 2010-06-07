@@ -32,76 +32,81 @@ import org.reward4j.model.User;
 import org.reward4j.service.RewardService;
 
 /**
- * The {@code RewardServiceImpl} represents the concrete 
- * implementation of the {@link RewardService}.
+ * The {@code RewardServiceImpl} represents the concrete implementation of the
+ * {@link RewardService}.
  * 
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  */
 public class RewardServiceImpl implements RewardService {
-    private static final Logger LOG = Logger.getLogger(RewardServiceImpl.class);
-    
-    private AccountDao accountDao;
-    private RateableActionDao rateableActionDao;
-    
-    public void setAccountDao(AccountDao accountDao) {
-        this.accountDao = accountDao;
-    }
-    
-    public void setRateableActionDao(RateableActionDao rateableActionDao) {
-        this.rateableActionDao = rateableActionDao;
+  private static final Logger LOG = Logger.getLogger(RewardServiceImpl.class);
+
+  private AccountDao accountDao;
+  private RateableActionDao rateableActionDao;
+
+  public void setAccountDao(AccountDao accountDao) {
+    this.accountDao = accountDao;
+  }
+
+  public void setRateableActionDao(RateableActionDao rateableActionDao) {
+    this.rateableActionDao = rateableActionDao;
+  }
+
+  @Override
+  public void payForAction(Coin coins, String actionName, User user) {
+    if (null == user)
+      throw new IllegalArgumentException("user must not be null");
+    if (StringUtils.isEmpty(actionName))
+      throw new IllegalArgumentException("actionName must not be empty");
+    if (null == coins)
+      throw new IllegalArgumentException("coins must not be null");
+
+    // create the necessary action
+    RateableAction action = null;
+    try {
+      action = this.rateableActionDao.getAction(actionName);
+    } catch (RateableActionNotExistException e) {
+      action = new RateableAction(actionName);
+      this.rateableActionDao.saveAction(action);
     }
 
-    @Override
-    public void payForAction(Coin coins, String actionName, User user) {
-        if(null==user) throw new IllegalArgumentException("user must not be null");
-        if(StringUtils.isEmpty(actionName)) throw new IllegalArgumentException("actionName must not be empty");
-        if(null==coins) throw new IllegalArgumentException("coins must not be null");
-        
-        // create the necessary action
-        RateableAction action = null;
-        try {
-            action = this.rateableActionDao.getAction(actionName);
-        } catch(RateableActionNotExistException e) {
-            action = new RateableAction(actionName);
-            this.rateableActionDao.saveAction(action);
-        }
-        
-        // create the necessary position
-        AccountPosition position = new AccountPosition(action, coins);
-        
-        // fetch the user's account
-        Account account = null;
-        try {
-            account = this.accountDao.getAccountForUser(user);
-        } catch(AccountNotExistException e) {
-            account = new Account("main");
-        }
+    // create the necessary position
+    AccountPosition position = new AccountPosition(action, coins);
 
-        if(null!=account) {
-            // change the account and save it
-            account.addPosition(position);
-            this.accountDao.saveAccount(account);
-        } else {
-            LOG.warn("could not get account for user " + user);
-        }
-    }
-    
-    @Override
-    public Account getAccount(User user) throws AccountNotExistException {
-        if(null==user) throw new IllegalArgumentException("user must not be null");
-        
-        return this.accountDao.getAccountForUser(user);
-    }
-    
-    @Override
-    public double getBalance(User user) {
-        if(null==user) throw new IllegalArgumentException("user must not be null");
-        
-        return this.accountDao.getBalanceForUser(user);
+    // fetch the user's account
+    Account account = null;
+    try {
+      account = this.accountDao.getAccountForUser(user);
+    } catch (AccountNotExistException e) {
+      account = new Account("main");
     }
 
-    @Override
-    public Set<Account> getAllAccounts() {
-        return this.accountDao.getAllAccounts();
-    }    
+    if (null != account) {
+      // change the account and save it
+      account.addPosition(position);
+      this.accountDao.saveAccount(account);
+    } else {
+      LOG.warn("could not get account for user " + user);
+    }
+  }
+
+  @Override
+  public Account getAccount(User user) throws AccountNotExistException {
+    if (null == user)
+      throw new IllegalArgumentException("user must not be null");
+
+    return this.accountDao.getAccountForUser(user);
+  }
+
+  @Override
+  public double getBalance(User user) {
+    if (null == user)
+      throw new IllegalArgumentException("user must not be null");
+
+    return this.accountDao.getBalanceForUser(user);
+  }
+
+  @Override
+  public Set<Account> getAllAccounts() {
+    return this.accountDao.getAllAccounts();
+  }
 }

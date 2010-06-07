@@ -21,15 +21,15 @@ package org.reward4j.model;
  * @author hillger.t
  */
 public class SimpleAmount implements Amount {
-	private double amount = 0d;
-	
-	@Override
-	public double getAmount() {		
-		return amount;
-	}
+  private double amount = 0d;
 
-	@Override
-	public void setAmount(double amount) {
-		this.amount = amount;	
-	}
+  @Override
+  public double getAmount() {
+    return amount;
+  }
+
+  @Override
+  public void setAmount(double amount) {
+    this.amount = amount;
+  }
 }

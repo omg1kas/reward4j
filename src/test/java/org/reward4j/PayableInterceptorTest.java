@@ -16,8 +16,6 @@
 
 package org.reward4j;
 
-import static org.junit.Assert.*;
-
 import java.lang.reflect.Method;
 
 import org.junit.Before;
@@ -68,10 +66,8 @@ public class PayableInterceptorTest {
         verify(userResolver);
     }
     
-    
-    
     class PayableTestSupport {
-        @Payable(action="testAction", coins="10")
+        @Payable(action="testAction", coins=10)
         public void testMe() {}
     }
 

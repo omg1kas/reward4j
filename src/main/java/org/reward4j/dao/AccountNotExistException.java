@@ -21,21 +21,21 @@ package org.reward4j.dao;
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  */
 public class AccountNotExistException extends Exception {
-    private static final long serialVersionUID = 1183249976656856221L;
+  private static final long serialVersionUID = 1183249976656856221L;
 
-		public AccountNotExistException() {
-			super();
-		}
+  public AccountNotExistException() {
+    super();
+  }
 
-		public AccountNotExistException(String message, Throwable cause) {
-			super(message, cause);
-		}
+  public AccountNotExistException(String message, Throwable cause) {
+    super(message, cause);
+  }
 
-		public AccountNotExistException(String message) {
-			super(message);
-		}
+  public AccountNotExistException(String message) {
+    super(message);
+  }
 
-		public AccountNotExistException(Throwable cause) {
-			super(cause);
-		}
+  public AccountNotExistException(Throwable cause) {
+    super(cause);
+  }
 }

@@ -36,106 +36,113 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * The {@code Position} represents a position within a user's {@link Account}. After 
- * creation a {@code Position} is immutable.
+ * The {@code AccountPosition} represents a position within a user's
+ * {@link Account}. After creation a {@code AccountPosition} is immutable.
  * 
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  * @author hillger.t
  */
 @Entity
 public class AccountPosition implements Serializable {
-	private static final long serialVersionUID = -4937858211810042799L;
+  private static final long serialVersionUID = -4937858211810042799L;
 
-	// Unique identifier.
-	@Id
-	@Column(name = "accountpositionid")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+  /** Unique identifier. */
+  @Id
+  @Column(name = "accountpositionid")
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private long id;
 
-	// Date of insertion. Should always be sysdate and mandatory.
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date insertionDate = new Date();
+  /** Date of insertion. Should always be sysdate and mandatory. */
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date insertionDate = new Date();
 
-	// Points to the position's {@link Account}.
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "accountid")
-	private Account account;
+  /** Refers to the position's {@link Account}. */
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "accountid")
+  private Account account;
 
-	// Rate for this account position according to the underlying action.
-	private double balance;
+  /**
+   * Rate for this {@code AccountPosition} according to the underlying action.
+   */
+  private double balance;
 
-	// The origin {@link RateableAction} that forces this AccountPosition.
-	@OneToOne(targetEntity = RateableAction.class, optional = false)
-	@JoinColumn(name = "actionid")
-	private RateableAction action;
-	
-	public AccountPosition() {}
+  /**
+   * The origin {@link RateableAction} that forces this {@code AccountPosition}.
+   */
+  @OneToOne(targetEntity = RateableAction.class, optional = false)
+  @JoinColumn(name = "actionid")
+  private RateableAction action;
 
-	public AccountPosition(RateableAction action, Coin balance) {
-		if (null == action)
-			throw new IllegalArgumentException("action must not be null");
-		if (null == balance)
-			throw new IllegalArgumentException("balance must not be null");
+  public AccountPosition() {
+  }
 
-		this.id = UUID.randomUUID().getMostSignificantBits();
-		this.action = action;
-		this.balance = balance.amount();
-	}
+  public AccountPosition(RateableAction action, Coin balance) {
+    if (null == action)
+      throw new IllegalArgumentException("action must not be null");
+    if (null == balance)
+      throw new IllegalArgumentException("balance must not be null");
 
-	public long getId() {
-		return id;
-	}
+    this.id = UUID.randomUUID().getMostSignificantBits();
+    this.action = action;
+    this.balance = balance.amount();
+  }
 
-	protected void setId(long id) {
-		this.id = id;
-	}
+  public long getId() {
+    return id;
+  }
 
-	public RateableAction getAction() {
-		return action;
-	}
+  protected void setId(long id) {
+    this.id = id;
+  }
 
-	public Date getInsertionDate() {
-		return (Date) insertionDate.clone();
-	}
+  public RateableAction getAction() {
+    return action;
+  }
 
-	public Coin getValue() {
-		return new Coin(this.balance);
-	}
+  public Date getInsertionDate() {
+    return (Date) insertionDate.clone();
+  }
 
-	public Account getAccount() {
-		return account;
-	}
+  public Coin getValue() {
+    return new Coin(this.balance);
+  }
 
-	public void setAccount(Account account) {
-		this.account = account;
-	}
+  public Account getAccount() {
+    return account;
+  }
 
-	@Override
-	public boolean equals(Object obj) {
+  public void setAccount(Account account) {
+    this.account = account;
+  }
 
-		if (obj == null) {
-			return false;
-		}
-		if (obj == this) {
-			return true;
-		}
-		if (obj.getClass() != getClass()) {
-			return false;
-		}
+  @Override
+  public boolean equals(Object obj) {
 
-		AccountPosition rhs = (AccountPosition) obj;
+    if (obj == null) {
+      return false;
+    }
+    if (obj == this) {
+      return true;
+    }
+    if (obj.getClass() != getClass()) {
+      return false;
+    }
 
-		return new EqualsBuilder().append(this.id, rhs.id).append(this.action, rhs.action).append(this.balance, rhs.balance).isEquals();
-	}
+    AccountPosition rhs = (AccountPosition) obj;
 
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder().append(this.id).append(this.action).append(this.balance).toHashCode();
-	}
+    return new EqualsBuilder().append(this.id, rhs.id).append(this.action, rhs.action)
+        .append(this.balance, rhs.balance).isEquals();
+  }
 
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this).append("id", this.id).append("action", this.action).append("balance", this.balance).append("insertionDate", this.insertionDate).toString();
-	}
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder().append(this.id).append(this.action).append(this.balance).toHashCode();
+  }
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this).append("id", this.id).append("action", this.action)
+        .append("balance", this.balance).append("insertionDate", this.insertionDate).toString();
+  }
 
 }

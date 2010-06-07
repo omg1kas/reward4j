@@ -21,29 +21,29 @@ import org.reward4j.service.UserNotFoundException;
 import org.reward4j.service.UserResolver;
 
 /**
- * The {@code StandardUserResolver} retrieves a {@link User} by looking
- * for the necessary information within a specific <code>ThreadLocal</code>
- * context.
+ * The {@code StandardUserResolver} retrieves a {@link User} by looking for the
+ * necessary information within a specific <code>ThreadLocal</code> context.
  * <p/>
- * So it is necessary that somebody puts the {@link User} into this <code>ThreadLocal</code>
- * context when user's actions shall be rewarded by the {@code StandardUserResolver}.
+ * So it is necessary that somebody puts the {@link User} into this
+ * <code>ThreadLocal</code> context when user's actions shall be rewarded by the
+ * {@code StandardUserResolver}.
  * 
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  */
 public class StandardUserResolver implements UserResolver {
-    private static ThreadLocal<User> tl = new ThreadLocal<User>();
+  private static ThreadLocal<User> tl = new ThreadLocal<User>();
 
-    @Override
-    public User getUser() throws UserNotFoundException {
-        User foundUser = null;
-        
-        foundUser = tl.get();
-        
-        if(null==foundUser) {
-            throw new UserNotFoundException();
-        }
-        
-        return foundUser;
+  @Override
+  public User getUser() throws UserNotFoundException {
+    User foundUser = null;
+
+    foundUser = tl.get();
+
+    if (null == foundUser) {
+      throw new UserNotFoundException();
     }
+
+    return foundUser;
+  }
 
 }

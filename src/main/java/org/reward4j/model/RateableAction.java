@@ -29,79 +29,74 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * A {@code RateableAction} describes an action, that will be payed for, when 
+ * A {@code RateableAction} describes an action, that will be payed for, when
  * the action is executed. An action is always executed by an {@link User}.
- *   
+ * 
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  */
 @Entity
 public class RateableAction implements Serializable {
-    private static final long serialVersionUID = -2900499255363027395L;
-    
-    // Unique identifier.
-  	@Id
-  	@Column(name = "actionid")
-  	@GeneratedValue(strategy = GenerationType.AUTO)
-  	private long id;
-    
-		// name of the rateable action that is also used as unique identifier
-		@Column(nullable = false)
-		private String name;
-		
-		public RateableAction() {}
-		
-		public RateableAction(final String name) {
-	    this.name = name;
+  private static final long serialVersionUID = -2900499255363027395L;
+
+  // Unique identifier.
+  @Id
+  @Column(name = "actionid")
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private long id;
+
+  // name of the rateable action that is also used as unique identifier
+  @Column(nullable = false)
+  private String name;
+
+  public RateableAction() {
+  }
+
+  public RateableAction(final String name) {
+    this.name = name;
+  }
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  @Override
+  public String toString() {
+    return new ToStringBuilder(this).append("name", this.name).toString();
+  }
+
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder().append(this.name).toHashCode();
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+
+    if (obj == null) {
+      return false;
     }
-		
-		public long getId() {
-			return id;
-		}
+    if (obj == this) {
+      return true;
+    }
+    if (obj.getClass() != getClass()) {
+      return false;
+    }
 
-		public void setId(long id) {
-			this.id = id;
-		}
+    RateableAction rhs = (RateableAction) obj;
 
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public String getName() {
-			return name;
-		}
-		
-		@Override
-		public String toString() {
-		    return new ToStringBuilder(this)
-		        .append("name", this.name)
-		        .toString();
-		}
-		
-		@Override
-		public int hashCode() {
-		    return new HashCodeBuilder()
-		        .append(this.name)
-		        .toHashCode(); 
-		}
-		
-		@Override
-		public boolean equals(Object obj) {
-		    
-		    if (obj == null) { 
-		        return false; 
-		    }
-		    if (obj == this) { 
-		        return true; 
-		    }
-		    if (obj.getClass() != getClass()) {
-		        return false;
-		    }
-		    
-		    RateableAction rhs = (RateableAction) obj;
-		    
-		    return new EqualsBuilder()
-		        .append(this.name, rhs.name)
-		        .isEquals();
-		}
+    return new EqualsBuilder().append(this.name, rhs.name).isEquals();
+  }
 
 }

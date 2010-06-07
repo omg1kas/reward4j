@@ -24,13 +24,14 @@ package org.reward4j.model;
  */
 public interface Amount {
 
-	/**
-	 * Returns an amount which should be payed when a {@link RateableAction} action was successfully executed.
-	 */
-	public double getAmount();
-	
-	/**
-	 * Sets the given amount that should be payed for a {@link RateableAction}.
-	 */
-	public void setAmount(double amount);
+  /**
+   * Returns an amount which should be payed when a {@link RateableAction}
+   * action was successfully executed.
+   */
+  public double getAmount();
+
+  /**
+   * Sets the given amount that should be payed for a {@link RateableAction}.
+   */
+  public void setAmount(double amount);
 }

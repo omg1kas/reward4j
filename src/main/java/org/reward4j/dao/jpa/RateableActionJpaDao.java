@@ -24,31 +24,30 @@ import org.reward4j.model.RateableAction;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 
 /**
- * {@code AccountJpaDao} is the jpa specific implementation of the {@link AccountDao} 
- * using the spring specific dao support.
+ * {@code AccountJpaDao} is the jpa specific implementation of the
+ * {@link AccountDao} using the spring specific dao support.
  * 
  * @author hillger.t
  */
 public class RateableActionJpaDao extends JpaDaoSupport implements RateableActionDao {
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public RateableAction getAction(String actionName) throws RateableActionNotExistException {
-		try {
-			List<RateableAction> result = this.getJpaTemplate().find("select ra from RateableAction ra where ra.name = ?");
-			return result.get(0);
-		}
-		catch (Exception e) {
-			throw new RateableActionNotExistException("RateableAction could not be found: " + actionName);
-		}
-		
-	}
+  @Override
+  @SuppressWarnings("unchecked")
+  public RateableAction getAction(String actionName) throws RateableActionNotExistException {
+    try {
+      List<RateableAction> result = this.getJpaTemplate().find("select ra from RateableAction ra where ra.name = ?");
+      return result.get(0);
+    } catch (Exception e) {
+      throw new RateableActionNotExistException("RateableAction could not be found: " + actionName);
+    }
 
-	@Override
-	public void saveAction(RateableAction action) {
-		if (!this.getJpaTemplate().contains(action))
-			action = this.getJpaTemplate().merge(action);
-		this.getJpaTemplate().persist(action);
-	}
+  }
+
+  @Override
+  public void saveAction(RateableAction action) {
+    if (!this.getJpaTemplate().contains(action))
+      action = this.getJpaTemplate().merge(action);
+    this.getJpaTemplate().persist(action);
+  }
 
 }

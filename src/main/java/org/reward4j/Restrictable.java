@@ -23,8 +23,8 @@ import java.lang.annotation.Target;
 import org.reward4j.model.User;
 
 /**
- * Indicates whether a type annotated with this annotation shall be analyzed using the
- * {@link PayableInterceptor}, so that a {@link User} can be rewarded.
+ * Indicates whether a type annotated with this annotation shall be analyzed
+ * using the {@link PayableInterceptor}, so that a {@link User} can be rewarded.
  * 
  * @author hillger.t
  */
@@ -38,10 +38,11 @@ public @interface Restrictable {
    * @return amount of the reward
    */
   double coins() default 0.0;
-  
+
   /**
-   * Describes how a validation of a restrictable action should be performed. Normaly
-   * the amount should be higher. But other situations could maybe also occur.
+   * Describes how a validation of a restrictable action should be performed.
+   * Normaly the amount should be higher. But other situations could maybe also
+   * occur.
    * 
    * @return
    */
