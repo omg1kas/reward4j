@@ -30,15 +30,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.CascadeType;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+
 /**
  * The {@code AccountPosition} represents a position within a user's
  * {@link Account}. After creation a {@code AccountPosition} is immutable.
- * 
+ *
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  * @author hillger.t
  */
@@ -69,13 +71,22 @@ public class AccountPosition implements Serializable {
   /**
    * The origin {@link RateableAction} that forces this {@code AccountPosition}.
    */
-  @OneToOne(targetEntity = RateableAction.class, optional = false)
+  @ManyToOne(targetEntity = RateableAction.class, optional = false)
   @JoinColumn(name = "actionid")
   private RateableAction action;
 
-  public AccountPosition() {
+  /**
+   * Constructor.
+   */
+  protected AccountPosition() {
   }
 
+  /**
+   * Constructor.
+   *
+   * @param action the necessary {@link RateableAction}
+   * @param balance the necessary balance of this account position
+   */
   public AccountPosition(RateableAction action, Coin balance) {
     if (null == action)
       throw new IllegalArgumentException("action must not be null");
@@ -107,11 +118,11 @@ public class AccountPosition implements Serializable {
     return new Coin(this.balance);
   }
 
-  public Account getAccount() {
+  protected Account getAccount() {
     return account;
   }
 
-  public void setAccount(Account account) {
+  protected void setAccount(Account account) {
     this.account = account;
   }
 

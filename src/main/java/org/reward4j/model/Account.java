@@ -19,12 +19,10 @@ package org.reward4j.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -40,41 +38,35 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 public class Account implements Serializable {
   private static final long serialVersionUID = -3766204445266143843L;
 
-  // Unique identifier.
+  /** Name of this account. */
   @Id
-  @Column(name = "accountid")
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id;
-
-  // Name of this account.
-  @Column(nullable = false, unique = true, length = 50)
+  @Column(nullable = false, unique = true, length = 250)
   private String name;
 
-  // Points to the user of this account.
+  /** Points to the user of this account. */
   @OneToOne(mappedBy = "account")
   private User user;
 
-  // Collection of all account positions for this account.
-  @OneToMany(mappedBy = "account")
+  /** Collection of all account positions for this account. */
+  @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
   private List<AccountPosition> positions = new ArrayList<AccountPosition>();
 
-  public Account() {
+  /**
+   * Constructor.
+   */
+  protected Account() {
   }
 
+  /**
+   * Constructor.
+   *
+   * @param name
+   */
   public Account(final String name) {
     if (null == name)
       throw new IllegalArgumentException("name must not be null");
 
-    this.id = UUID.randomUUID().getMostSignificantBits();
     this.name = name;
-  }
-
-  public long getId() {
-    return id;
-  }
-
-  protected void setId(long id) {
-    this.id = id;
   }
 
   public String getName() {
@@ -103,8 +95,8 @@ public class Account implements Serializable {
 
   public void addPosition(AccountPosition position) {
     if (null != position) {
-      position.setAccount(this);
       this.positions.add(position);
+      position.setAccount(this);
     }
   }
 
@@ -131,17 +123,17 @@ public class Account implements Serializable {
 
     Account rhs = (Account) obj;
 
-    return new EqualsBuilder().append(this.id, rhs.id).append(this.name, rhs.name).isEquals();
+    return new EqualsBuilder().append(this.name, rhs.name).isEquals();
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder().append(this.id).append(this.name).toHashCode();
+    return new HashCodeBuilder().append(this.name).toHashCode();
   }
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this).append("id", this.id).append("name", this.name).toString();
+    return new ToStringBuilder(this).append("name", this.name).toString();
   }
 
 }

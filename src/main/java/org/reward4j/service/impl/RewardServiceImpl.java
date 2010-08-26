@@ -34,7 +34,7 @@ import org.reward4j.service.RewardService;
 /**
  * The {@code RewardServiceImpl} represents the concrete implementation of the
  * {@link RewardService}.
- * 
+ *
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  */
 public class RewardServiceImpl implements RewardService {
@@ -51,6 +51,9 @@ public class RewardServiceImpl implements RewardService {
     this.rateableActionDao = rateableActionDao;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void payForAction(Coin coins, String actionName, User user) {
     if (null == user)
@@ -76,19 +79,17 @@ public class RewardServiceImpl implements RewardService {
     Account account = null;
     try {
       account = this.accountDao.getAccountForUser(user);
-    } catch (AccountNotExistException e) {
-      account = new Account("main");
-    }
-
-    if (null != account) {
       // change the account and save it
       account.addPosition(position);
       this.accountDao.saveAccount(account);
-    } else {
+    } catch (AccountNotExistException e) {
       LOG.warn("could not get account for user " + user);
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Account getAccount(User user) throws AccountNotExistException {
     if (null == user)
@@ -97,12 +98,17 @@ public class RewardServiceImpl implements RewardService {
     return this.accountDao.getAccountForUser(user);
   }
 
+  /**
+   * {@inheritDoc}
+   * @throws AccountNotExistException
+   */
   @Override
-  public double getBalance(User user) {
+  public Coin getBalance(User user) throws AccountNotExistException {
     if (null == user)
       throw new IllegalArgumentException("user must not be null");
 
-    return this.accountDao.getBalanceForUser(user);
+    Account account = this.accountDao.getAccountForUser(user);
+    return account.getBalance();
   }
 
   @Override

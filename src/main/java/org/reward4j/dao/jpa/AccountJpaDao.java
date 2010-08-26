@@ -15,6 +15,7 @@
  */
 package org.reward4j.dao.jpa;
 
+import java.util.List;
 import java.util.Set;
 
 import org.reward4j.dao.AccountDao;
@@ -24,14 +25,14 @@ import org.reward4j.model.User;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 
 /**
- * {@code AccountJpaDao} is the jpa specific implementation of the
- * {@link AccountDao} using some spring specific dao support.
- * 
+ * {@code AccountJpaDao} is the JPA specific implementation of the
+ * {@link AccountDao} using some spring specific DAO support.
+ *
  * @author hillger.t
  */
 public class AccountJpaDao extends JpaDaoSupport implements AccountDao {
 
-  // TODO: DICUSS: This sould be rethought somehow. If we have an user we also
+  // TODO: DISCUSS: This should be rethought somehow. If we have an user we also
   // should already have the user's accounts. Mark this method as deprecated.
   @Override
   @Deprecated
@@ -43,30 +44,46 @@ public class AccountJpaDao extends JpaDaoSupport implements AccountDao {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
+  @SuppressWarnings("unchecked")
   public Account getAccountByName(String name) throws AccountNotExistException {
     try {
-      return (Account) this.getJpaTemplate().find("select a from Account a where a.name = ?", name);
+      List<Account> accounts = this.getJpaTemplate().find("select a from Account a where a.name = ?", name);
+      if (accounts.isEmpty()) {
+        throw new AccountNotExistException("account with name '" + name + "' does not exist");
+      } else {
+        if (accounts.size() > 1) {
+          throw new AccountNotExistException("account with name '" + name + "' is ambiguous!");
+        } else {
+          return accounts.get(0);
+        }
+      }
     } catch (Exception e) {
       throw new AccountNotExistException(e);
     }
   }
 
-  public double getBalanceForUser(User user) {
-    return (Double) this.getJpaTemplate().find(
-        "select sum(p.balance) from Account a join a.positions p where a.user = ?", user).get(0);
-  }
-
+  /**
+   * {@inheritDoc}
+   */
   @Override
   @SuppressWarnings("unchecked")
   public Set<Account> getAllAccounts() {
     return (Set<Account>) this.getJpaTemplate().find("select a from Account a order by a.id");
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void saveAccount(Account account) {
-    if (!this.getJpaTemplate().contains(account))
+    if (this.getJpaTemplate().contains(account)) {
       account = this.getJpaTemplate().merge(account);
-    this.getJpaTemplate().persist(account);
+    } else {
+      this.getJpaTemplate().persist(account);
+    }
   }
 }
