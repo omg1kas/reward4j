@@ -33,7 +33,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /**
  * The {@code User} represents a user in the reward4j domain. A {@code User} has
  * an {@link Account}.
- * 
+ *
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  * @author hillger.t
  */
@@ -48,7 +48,7 @@ public class User implements Serializable {
   private long id;
 
   // the name if the user
-  @Column(nullable = false, unique = true, length = 50)
+  @Column(nullable = false, unique = true, length = 250)
   private String name;
 
   // the user's account

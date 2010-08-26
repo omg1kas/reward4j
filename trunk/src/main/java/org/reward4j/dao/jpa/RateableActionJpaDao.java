@@ -24,30 +24,47 @@ import org.reward4j.model.RateableAction;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 
 /**
- * {@code AccountJpaDao} is the jpa specific implementation of the
- * {@link AccountDao} using the spring specific dao support.
- * 
+ * {@code AccountJpaDao} is the JPA specific implementation of the
+ * {@link AccountDao} using the spring specific DAO support.
+ *
  * @author hillger.t
  */
 public class RateableActionJpaDao extends JpaDaoSupport implements RateableActionDao {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   @SuppressWarnings("unchecked")
   public RateableAction getAction(String actionName) throws RateableActionNotExistException {
     try {
-      List<RateableAction> result = this.getJpaTemplate().find("select ra from RateableAction ra where ra.name = ?");
-      return result.get(0);
+      List<RateableAction> result = this.getJpaTemplate().find("select ra from RateableAction ra where ra.name = ?",
+          actionName);
+      if (result.isEmpty()) {
+        throw new RateableActionNotExistException("RateableAction with name '" + actionName + "' could not be found");
+      } else {
+        if (result.size() > 1) {
+          throw new RateableActionNotExistException("RateableAction with name '" + actionName + "' is ambiguous!");
+        } else {
+          return result.get(0);
+        }
+      }
     } catch (Exception e) {
-      throw new RateableActionNotExistException("RateableAction could not be found: " + actionName);
+      throw new RateableActionNotExistException(e);
     }
 
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void saveAction(RateableAction action) {
-    if (!this.getJpaTemplate().contains(action))
+    if (this.getJpaTemplate().contains(action)) {
       action = this.getJpaTemplate().merge(action);
-    this.getJpaTemplate().persist(action);
+    } else {
+      this.getJpaTemplate().persist(action);
+    }
   }
 
 }

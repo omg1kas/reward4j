@@ -14,30 +14,19 @@
  * the License.
  */
 
-package org.reward4j.model;
+package org.reward4j.test;
 
-import static org.junit.Assert.*;
-
-import static org.hamcrest.core.IsEqual.*;
-import static org.hamcrest.core.IsNot.not;
 import org.junit.Test;
 
-public class RateableActionTest {
+/**
+ *
+ * @author Peter Kehren <mailto:kehren@eyeslide.de>
+ */
+public class AcceptanceAndIntegrationTest {
 
   @Test
-  public void testGetName() {
-    RateableAction action = new RateableAction("testaction");
-    assertEquals("testaction", action.getName());
-  }
+  public void empty() {
 
-  @Test
-  public void testEquals() {
-    RateableAction action1 = new RateableAction("action");
-    RateableAction action2 = new RateableAction("action2");
-    RateableAction action3 = new RateableAction("action");
-
-    assertThat(action1, equalTo(action3));
-    assertThat(action1, not(equalTo(action2)));
   }
 
 }

@@ -16,10 +16,8 @@
 package org.reward4j.model;
 
 /**
- * Interface describing how some amount can be retrieved. Implementations can be
- * configured within the {@link Payable} annotaion to handle individual purpose
- * needs for retrieving amounts.
- * 
+ * {@code Amount} describes how some amount can be retrieved.
+ *
  * @author hillger.t
  */
 public interface Amount {

@@ -32,7 +32,7 @@ import org.springframework.aop.MethodBeforeAdvice;
  * <p/>
  * The most necessary information are described by the according
  * {@link Restrictable} annotation.
- * 
+ *
  * @author hillger.t
  */
 public class RestrictableInterceptor implements MethodBeforeAdvice {
@@ -53,7 +53,7 @@ public class RestrictableInterceptor implements MethodBeforeAdvice {
     try {
       if (method.isAnnotationPresent(Restrictable.class)) {
         User user = this.userResolver.getUser();
-        double amount = rewardService.getBalance(user);
+        double amount = rewardService.getBalance(user).amount();
 
         Restrictable restrictable = method.getAnnotation(Restrictable.class);
         RestrictionDecider decider = restrictable.decider().newInstance();

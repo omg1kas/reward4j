@@ -20,8 +20,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -31,36 +29,26 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /**
  * A {@code RateableAction} describes an action, that will be payed for, when
  * the action is executed. An action is always executed by an {@link User}.
- * 
+ *
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  */
 @Entity
 public class RateableAction implements Serializable {
   private static final long serialVersionUID = -2900499255363027395L;
 
-  // Unique identifier.
+  /** name of the rateable action that is also used as unique identifier */
   @Id
-  @Column(name = "actionid")
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id;
-
-  // name of the rateable action that is also used as unique identifier
   @Column(nullable = false)
   private String name;
 
-  public RateableAction() {
+  /**
+   * Constructor.
+   */
+  protected RateableAction() {
   }
 
   public RateableAction(final String name) {
     this.name = name;
-  }
-
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
   }
 
   public void setName(String name) {

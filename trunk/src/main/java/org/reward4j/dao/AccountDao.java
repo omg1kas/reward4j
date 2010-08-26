@@ -23,7 +23,7 @@ import org.reward4j.model.User;
 
 /**
  * The {@code AccountDao} is a data access layer for {@link Account}s.
- * 
+ *
  * @author Peter Kehren <mailto:kehren@eyeslide.de>
  */
 public interface AccountDao {
@@ -31,7 +31,7 @@ public interface AccountDao {
   /**
    * Retrieves the user's account. If the account doesn't exist an
    * {@link AccountNotExistException} will be thrown.
-   * 
+   *
    * @param user
    *          the {@link User} the account is for
    * @throws AccountNotExistException
@@ -43,7 +43,7 @@ public interface AccountDao {
   /**
    * Retrieves an account with the given name. If the account doesn't exist an
    * {@link AccountNotExistException} will be thrown.
-   * 
+   *
    * @param name
    *          of the {@link Account} to search for
    * @throws AccountNotExistException
@@ -52,18 +52,16 @@ public interface AccountDao {
    */
   Account getAccountByName(String name) throws AccountNotExistException;
 
-  double getBalanceForUser(User user);
-
   /**
    * Retrieves all available {@link Account}s.
-   * 
+   *
    * @return All {@link Account}s
    */
   Set<Account> getAllAccounts();
 
   /**
    * Saves an {@link Account}.
-   * 
+   *
    * @param account
    *          the account that shall be saved
    */

@@ -1,5 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.reward4j</groupId>
 	<artifactId>reward4j</artifactId>
@@ -8,6 +9,14 @@
 	<name>reward4j</name>
 	<url>http://www.reward4j.org</url>
 	<inceptionYear>2009</inceptionYear>
+
+	<properties>
+		<!-- general properties -->
+		<copyright.year>2009-2010</copyright.year>
+		<compiler.java.version>1.6</compiler.java.version>
+		<easymock.version>2.5.2</easymock.version>
+		<spring.version>2.5.6</spring.version>
+	</properties>
 
 	<licenses>
 		<license>
@@ -31,8 +40,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>${compiler.java.version}</source>
+					<target>${compiler.java.version}</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -94,6 +103,10 @@
 	</build>
 
 	<repositories>
+		<repository>
+   			<id>JBoss Repository</id>
+   			<url>http://repository.jboss.com/maven2</url>
+ 		</repository>
 	</repositories>
 
 	<developers>
@@ -114,37 +127,39 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.5</version>
+			<version>4.4</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.easymock</groupId>
 			<artifactId>easymock</artifactId>
-			<version>2.5.2</version>
+			<version>${easymock.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.easymock</groupId>
 			<artifactId>easymockclassextension</artifactId>
-			<version>2.5.2</version>
+			<version>${easymock.version}</version>
 			<scope>test</scope>
 		</dependency>
-		
-		<!-- compile dependencies -->
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.14</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.8.0.10</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- compile dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring</artifactId>
-			<version>2.5.6</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-mock</artifactId>
-			<version>2.0.8</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -152,29 +167,9 @@
 			<version>3.4.0.GA</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>3.3.2.GA</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<version>3.4.0.GA</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>ejb3-persistence</artifactId>
-			<version>3.3.2.Beta1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-commons-annotations</artifactId>
-			<version>3.3.0.ga</version>
-		</dependency>
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib</artifactId>
-			<version>2.0.2</version>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-collections</groupId>
@@ -182,24 +177,9 @@
 			<version>3.2.1</version>
 		</dependency>
 		<dependency>
-			<groupId>dom4j</groupId>
-			<artifactId>dom4j</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-		<dependency>
-			<groupId>jboss</groupId>
-			<artifactId>javassist</artifactId>
-			<version>3.0</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.transaction</groupId>
-			<artifactId>jta</artifactId>
-			<version>1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>persistence-api</artifactId>
-			<version>1.0</version>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -207,23 +187,17 @@
 			<version>1.5.8</version>
 		</dependency>
 		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>2.4</version>
-		</dependency>
-		<dependency>
-			<groupId>hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>1.8.0.10</version>
-		</dependency>
-		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.6.0</version>
 		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+		</dependency>
 	</dependencies>
 
-	<!-- are these plugin really nessecary? Should be discussed!-->
 	<reporting>
 		<plugins>
 			<plugin>
@@ -269,7 +243,7 @@
 				<artifactId>maven-pmd-plugin</artifactId>
 				<configuration>
 					<linkXref>true</linkXref>
-					<targetJdk>1.6</targetJdk>
+					<targetJdk>${compiler.java.version}</targetJdk>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -279,19 +253,4 @@
 		</plugins>
 	</reporting>
 
-	<properties>
-		<!-- general properties -->
-		<copyright.year>2009-2010</copyright.year>
-
-		<!-- database settings -->
-		<dbunit.dataTypeFactoryName>org.dbunit.dataset.datatype.DefaultDataTypeFactory</dbunit.dataTypeFactoryName>
-		<dbunit.operation.type>CLEAN_INSERT</dbunit.operation.type>
-
-		<hibernate.dialect>org.hibernate.dialect.HSQLDialect</hibernate.dialect>
-
-		<reward4j.jdbc.driverClassName>org.hsqldb.jdbcDriver</reward4j.jdbc.driverClassName>
-		<reward4j.jdbc.url><![CDATA[jdbc:hsqldb:file:db_reward4j]]></reward4j.jdbc.url>
-		<reward4j.jdbc.username>sa</reward4j.jdbc.username>
-		<reward4j.jdbc.password></reward4j.jdbc.password>
-	</properties>
 </project>
