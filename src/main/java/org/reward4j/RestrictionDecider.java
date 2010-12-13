@@ -18,21 +18,20 @@ package org.reward4j;
 /**
  * {@code RestrictionDecider} implementations decide on base of some
  * {@link user}'s account balance.
- * 
+ *
  * @author hillger.t
+ * @author Peter Kehren <mailto:kehren@eyeslide.de>
  */
 public interface RestrictionDecider {
 
   /**
    * Some decision results in a boolean value.
-   * 
+   *
    * @param userBalance
    *          the user's balance
-   * @param value
+   * @param requestedValue
    *          the reference value for validating
    * @return boolean
    */
-  // TODO: DICUSS: Is return type boolean okay or should it be void with some
-  // exception thrown?
-  boolean decide(double userBalance, double value);
+  boolean decide(double userBalance, double requestedValue);
 }
