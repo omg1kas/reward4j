@@ -13,7 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.reward4j;
+package org.reward4j.decider;
+
+import org.reward4j.RestrictionDecider;
 
 /**
  * The {@code BalanceHigherDecider} is a {@link RestrictionDecider}

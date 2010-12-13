@@ -20,12 +20,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.reward4j.decider.BalanceHigherDecider;
 import org.reward4j.model.User;
 
 /**
  * Indicates whether a type annotated with this annotation shall be analyzed
  * using the {@link PayableInterceptor}, so that a {@link User} can be rewarded.
- * 
+ *
  * @author hillger.t
  */
 @Retention(RetentionPolicy.RUNTIME)
@@ -34,16 +35,16 @@ public @interface Restrictable {
 
   /**
    * Describes the amount of the reward of the action's execution.
-   * 
+   *
    * @return amount of the reward
    */
   double coins() default 0.0;
 
   /**
    * Describes how a validation of a restrictable action should be performed.
-   * Normaly the amount should be higher. But other situations could maybe also
+   * Normally the amount should be higher. But other situations could maybe also
    * occur.
-   * 
+   *
    * @return
    */
   Class<? extends RestrictionDecider> decider() default BalanceHigherDecider.class;
