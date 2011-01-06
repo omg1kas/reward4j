@@ -10,6 +10,13 @@
 	<url>http://www.reward4j.org</url>
 	<inceptionYear>2009</inceptionYear>
 
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>5</version>
+	</parent>
+
+
 	<properties>
 		<!-- general properties -->
 		<copyright.year>2009-2010</copyright.year>
@@ -33,6 +40,19 @@
 		<tag>trunk</tag>
 		<url>http://code.google.com/p/reward4j/source/browse/</url>
 	</scm>
+
+	<distributionManagement>
+		<repository>
+			<id>sonatype-nexus-staging</id>
+			<name>Sonatype Staging Repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+		</repository>
+		<snapshotRepository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Snapshot Repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<build>
 		<plugins>
@@ -127,14 +147,19 @@
 					</componentProperties>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<!-- version>2.0-beta-1</version -->
+			</plugin>
 		</plugins>
 	</build>
 
 	<repositories>
 		<repository>
-   			<id>JBoss Repository</id>
-   			<url>http://repository.jboss.com/maven2</url>
- 		</repository>
+			<id>JBoss Repository</id>
+			<url>http://repository.jboss.com/maven2</url>
+		</repository>
 	</repositories>
 
 	<developers>
